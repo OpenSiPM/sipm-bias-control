@@ -1,0 +1,26 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# ADP7118AUJZ-3.3-R7
+#
+DEF ADP7118AUJZ-3.3-R7 IC 0 30 Y Y 1 F N
+F0 "IC" 950 300 50 H V L CNN
+F1 "ADP7118AUJZ-3.3-R7" 950 200 50 H V L CNN
+F2 "SOT95P280X100-5N" 950 100 50 H I L CNN
+F3 "https://www.arrow.com/en/products/adp7118aujz-3.3-r7/analog-devices" 800 0 50 H I L CNN
+F4 "LDO Regulator Pos 3.3V 0.2A 5-Pin TSOT-23 T/R" 800 -100 50 H I L CNN "Description"
+F5 "1" 950 -200 50 H I L CNN "Height"
+F6 "Analog Devices" 950 -300 50 H I L CNN "Manufacturer_Name"
+F7 "ADP7118AUJZ-3.3-R7" 950 -400 50 H I L CNN "Manufacturer_Part_Number"
+F8 "ADP7118AUJZ-3.3-R7" 950 -700 50 H I L CNN "Arrow Part Number"
+DRAW
+P 5 0 1 6 200 100 750 100 750 -300 200 -300 200 100 N
+X VIN 1 0 0 200 R 50 50 0 0 B
+X GND 2 0 -200 200 R 50 50 0 0 B
+X EN 3 0 -100 200 R 50 50 0 0 B
+X SENSE 4 950 -100 200 L 50 50 0 0 B
+X VOUT 5 950 0 200 L 50 50 0 0 B
+ENDDRAW
+ENDDEF
+#
+#End Library
