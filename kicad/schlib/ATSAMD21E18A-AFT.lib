@@ -8,11 +8,8 @@ F0 "IC" 1150 800 50 H V L CNN
 F1 "ATSAMD21E18A-AFT" 1150 700 50 H V L CNN
 F2 "QFP80P900X900X120-32N" 1150 600 50 H I L CNN
 F3 "http://www.microchip.com/mymicrochip/filehandler.aspx?ddocname=en590209" 1150 500 50 H I L CNN
-F4 "ARM Microcontrollers - MCU Cortex-M0+,64KB FLASH,8KB SRAM T&R, - 32TQFP 125C, GREEN,1.6-3.6V,48MHz" 1150 400 50 H I L CNN "Description"
-F5 "1.2" 1150 300 50 H I L CNN "Height"
-F6 "Microchip" 1150 200 50 H I L CNN "Manufacturer_Name"
-F7 "ATSAMD21E18A-AFT" 1150 100 50 H I L CNN "Manufacturer_Part_Number"
-F8 "https://www.arrow.com/en/products/atsamd21e18a-aft/microchip-technology" 1150 -50 50 H I L CNN "Arrow Price/Stock"
+F4 "1.2" 1150 300 50 H I L CNN "Height"
+F5 "Microchip" 1150 200 50 H I L CNN "Manufacturer_Name"
 DRAW
 P 5 0 1 6 200 600 1100 600 1100 -2100 200 -2100 200 600 N
 X PA00 1 1300 500 200 L 50 50 0 0 B
@@ -40,6 +37,7 @@ X PA02 3 1300 300 200 L 50 50 0 0 B
 X VDDIN 30 0 -300 200 R 50 50 0 0 B
 X PA30 31 1300 -1900 200 L 50 50 0 0 B
 X PA31 32 1300 -2000 200 L 50 50 0 0 B
+X EP 33 0 -1700 200 R 50 50 0 0 B N
 X PA03 4 1300 200 200 L 50 50 0 0 B
 X PA04 5 1300 100 200 L 50 50 0 0 B
 X PA05 6 1300 0 200 L 50 50 0 0 B

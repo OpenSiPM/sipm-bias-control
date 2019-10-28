@@ -415,7 +415,7 @@ Wire Wire Line
 	1125 4850 1425 4850
 Connection ~ 1425 4850
 Text Label 5975 2425 2    50   ~ 0
-USB_DM
+USB_DN
 Text Label 5975 2525 2    50   ~ 0
 USB_DP
 $Comp
@@ -503,7 +503,7 @@ Wire Wire Line
 Wire Wire Line
 	8925 3200 9225 3200
 Text Label 8925 3100 0    50   ~ 0
-USB_DM
+USB_DN
 Text Label 8925 3200 0    50   ~ 0
 USB_DP
 Text Label 8925 3600 0    50   ~ 0
@@ -512,47 +512,6 @@ Text Label 8925 3500 0    50   ~ 0
 SWCLK
 Text Label 7275 1300 0    50   ~ 0
 RESET
-$Comp
-L Device:R_Small_US R7
-U 1 1 5BFE5A5C
-P 9775 2450
-F 0 "R7" H 9843 2496 50  0000 L CNN
-F 1 "1k" H 9843 2405 50  0000 L CNN
-F 2 "R_0402_1005Metric" H 9775 2450 50  0001 C CNN
-F 3 "~" H 9775 2450 50  0001 C CNN
-	1    9775 2450
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:LED D1
-U 1 1 5BFE5A63
-P 9775 2900
-F 0 "D1" V 9813 2783 50  0000 R CNN
-F 1 "LED" V 9722 2783 50  0000 R CNN
-F 2 "D_0603_1608Metric_Castellated" H 9775 2900 50  0001 C CNN
-F 3 "~" H 9775 2900 50  0001 C CNN
-	1    9775 2900
-	0    -1   -1   0   
-$EndComp
-Wire Wire Line
-	9775 2550 9775 2750
-$Comp
-L power:GND #PWR0115
-U 1 1 5BFE5A6C
-P 9775 3150
-F 0 "#PWR0115" H 9775 2900 50  0001 C CNN
-F 1 "GND" H 9780 2977 50  0000 C CNN
-F 2 "" H 9775 3150 50  0001 C CNN
-F 3 "" H 9775 3150 50  0001 C CNN
-	1    9775 3150
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9775 3050 9775 3150
-Wire Wire Line
-	8925 2100 9775 2100
-Wire Wire Line
-	9775 2100 9775 2350
 Text Label 9075 2000 2    50   ~ 0
 SCL
 Text Label 9075 1900 2    50   ~ 0
@@ -930,4 +889,8 @@ Wire Wire Line
 Wire Wire Line
 	3200 6650 3200 5825
 Connection ~ 3325 6650
+Text Label 9300 2100 2    50   ~ 0
+~SHDN
+Wire Wire Line
+	9300 2100 8925 2100
 $EndSCHEMATC
