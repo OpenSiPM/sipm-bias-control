@@ -8,4 +8,5 @@
   (lib (name CX80B1-24P)(type Legacy)(uri ${KIPRJMOD}/schlib/CX80B1-24P.lib)(options "")(descr ""))
   (lib (name ADP7118AUJZ-3.3-R7)(type Legacy)(uri ${KIPRJMOD}/schlib/ADP7118AUJZ-3.3-R7.lib)(options "")(descr ""))
   (lib (name pspice)(type Legacy)(uri ${KIPRJMOD}/schlib/pspice.lib)(options "")(descr ""))
+  (lib (name STM32F042G6U6)(type Legacy)(uri ${KIPRJMOD}/schlib/STM32F042G6U6.lib)(options "")(descr ""))
 )
