@@ -1,4 +1,4 @@
-20412620196112
+21985114491112
 footprints
 73415-2063
 73415-2063
@@ -62,6 +62,13 @@ Through{space}hole{space}pin{space}header{space}THT{space}2x02{space}2.54mm{spac
 0
 4
 4
+footprints
+PinHeader_2x03_P2.54mm_Vertical
+Through{space}hole{space}straight{space}pin{space}header,{space}2x03,{space}2.54mm{space}pitch,{space}double{space}rows
+Through{space}hole{space}pin{space}header{space}THT{space}2x03{space}2.54mm{space}double{space}row
+0
+6
+6
 footprints
 R_0402_1005Metric
 Resistor{space}SMD{space}0402{space}(1005{space}Metric),{space}square{space}(rectangular){space}end{space}terminal,{space}IPC_7351{space}nominal,{space}(Body{space}size{space}source:{space}http://www.tortai-tech.com/upload/download/2011102023233369053.pdf),{space}generated{space}with{space}kicad-footprint-generator
