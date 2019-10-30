@@ -1,4 +1,4 @@
-23393689708112
+24936795081112
 footprints
 ADP7118ACPZN-R7
 
@@ -8,22 +8,22 @@ ADP7118ACPZN-R7
 7
 footprints
 C_0402_1005Metric
-Capacitor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+Capacitor{space}SMD{space}0402{space}(1005{space}Metric),{space}square{space}(rectangular){space}end{space}terminal,{space}IPC_7351{space}nominal,{space}(Body{space}size{space}source:{space}http://www.tortai-tech.com/upload/download/2011102023233369053.pdf),{space}generated{space}with{space}kicad-footprint-generator
 capacitor
 0
 2
 2
 footprints
 C_0603_1608Metric
-Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+Capacitor{space}SMD{space}0603{space}(1608{space}Metric),{space}square{space}(rectangular){space}end{space}terminal,{space}IPC_7351{space}nominal,{space}(Body{space}size{space}source:{space}http://www.tortai-tech.com/upload/download/2011102023233369053.pdf),{space}generated{space}with{space}kicad-footprint-generator
 capacitor
 0
 2
 2
 footprints
 D_0603_1608Metric_Castellated
-Diode SMD 0603 (1608 Metric), castellated end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
-diode castellated
+Diode{space}SMD{space}0603{space}(1608{space}Metric),{space}castellated{space}end{space}terminal,{space}IPC_7351{space}nominal,{space}(Body{space}size{space}source:{space}http://www.tortai-tech.com/upload/download/2011102023233369053.pdf),{space}generated{space}with{space}kicad-footprint-generator
+diode{space}castellated
 0
 2
 2
@@ -36,7 +36,7 @@ HRS_CX80B1-24P
 30
 footprints
 L_1210_3225Metric
-Inductor SMD 1210 (3225 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+Inductor{space}SMD{space}1210{space}(3225{space}Metric),{space}square{space}(rectangular){space}end{space}terminal,{space}IPC_7351{space}nominal,{space}(Body{space}size{space}source:{space}http://www.tortai-tech.com/upload/download/2011102023233369053.pdf),{space}generated{space}with{space}kicad-footprint-generator
 inductor
 0
 2
@@ -49,23 +49,30 @@ MCP4726A0T-EMAY
 7
 7
 footprints
+POGO_ISP
+
+
+0
+6
+6
+footprints
 PinHeader_1x03_P2.54mm_Vertical
-Through hole straight pin header, 1x03, 2.54mm pitch, single row
-Through hole pin header THT 1x03 2.54mm single row
+Through{space}hole{space}straight{space}pin{space}header,{space}1x03,{space}2.54mm{space}pitch,{space}single{space}row
+Through{space}hole{space}pin{space}header{space}THT{space}1x03{space}2.54mm{space}single{space}row
 0
 3
 3
 footprints
 PinHeader_2x02_P2.54mm_Vertical
-Through hole straight pin header, 2x02, 2.54mm pitch, double rows
-Through hole pin header THT 2x02 2.54mm double row
+Through{space}hole{space}straight{space}pin{space}header,{space}2x02,{space}2.54mm{space}pitch,{space}double{space}rows
+Through{space}hole{space}pin{space}header{space}THT{space}2x02{space}2.54mm{space}double{space}row
 0
 4
 4
 footprints
-POGO_ISP
-
-
+PinHeader_2x03_P2.54mm_Vertical
+Through{space}hole{space}straight{space}pin{space}header,{space}2x03,{space}2.54mm{space}pitch,{space}double{space}rows
+Through{space}hole{space}pin{space}header{space}THT{space}2x03{space}2.54mm{space}double{space}row
 0
 6
 6
@@ -78,28 +85,28 @@ QFN-32-1EP_5x5mm_Pitch0.5mm
 33
 footprints
 QFN50P300X300X80-17N-D
-UD Package 16-Lead Plastic QFN (3mm × 3mm)
-Integrated Circuit
+UD{space}Package{space}16-Lead{space}Plastic{space}QFN{space}(3mm{space}×{space}3mm)
+Integrated{space}Circuit
 0
 17
 17
 footprints
 QFN50P400X400X60-28N-D
 UFQFPN28
-Integrated Circuit
+Integrated{space}Circuit
 0
 28
 28
 footprints
 R_0402_1005Metric
-Resistor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+Resistor{space}SMD{space}0402{space}(1005{space}Metric),{space}square{space}(rectangular){space}end{space}terminal,{space}IPC_7351{space}nominal,{space}(Body{space}size{space}source:{space}http://www.tortai-tech.com/upload/download/2011102023233369053.pdf),{space}generated{space}with{space}kicad-footprint-generator
 resistor
 0
 2
 2
 footprints
 R_0603_1608Metric
-Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+Resistor{space}SMD{space}0603{space}(1608{space}Metric),{space}square{space}(rectangular){space}end{space}terminal,{space}IPC_7351{space}nominal,{space}(Body{space}size{space}source:{space}http://www.tortai-tech.com/upload/download/2011102023233369053.pdf),{space}generated{space}with{space}kicad-footprint-generator
 resistor
 0
 2
