@@ -1,0 +1,8 @@
+(sym_lib_table
+  (lib (name "power")(type "Legacy")(uri "${KIPRJMOD}/schlib/power.lib")(options "")(descr ""))
+  (lib (name "Device")(type "Legacy")(uri "${KIPRJMOD}/schlib/Device.lib")(options "")(descr ""))
+  (lib (name "Connector_Generic")(type "Legacy")(uri "${KIPRJMOD}/schlib/Connector_Generic.lib")(options "")(descr ""))
+  (lib (name "TPS72301DBVR")(type "Legacy")(uri "${KIPRJMOD}/schlib/TPS72301DBVR.lib")(options "")(descr ""))
+  (lib (name "TPS79333DBVR")(type "Legacy")(uri "${KIPRJMOD}/schlib/TPS79333DBVR.lib")(options "")(descr ""))
+  (lib (name "LM2776")(type "Legacy")(uri "${KIPRJMOD}/schlib/LM2776.lib")(options "")(descr ""))
+)
