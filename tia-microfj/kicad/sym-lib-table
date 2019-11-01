@@ -1,0 +1,8 @@
+(sym_lib_table
+  (lib (name "Connector_Generic")(type "Legacy")(uri "${KIPRJMOD}/schlib/Connector_Generic.lib")(options "")(descr ""))
+  (lib (name "Device")(type "Legacy")(uri "${KIPRJMOD}/schlib/Device.lib")(options "")(descr ""))
+  (lib (name "OPA843")(type "Legacy")(uri "${KIPRJMOD}/schlib/OPA843.lib")(options "")(descr ""))
+  (lib (name "OPA847")(type "Legacy")(uri "${KIPRJMOD}/schlib/OPA847.lib")(options "")(descr ""))
+  (lib (name "power")(type "Legacy")(uri "${KIPRJMOD}/schlib/power.lib")(options "")(descr ""))
+  (lib (name "73415-2061")(type "Legacy")(uri "${KIPRJMOD}/schlib/73415-2061.lib")(options "")(descr ""))
+)
