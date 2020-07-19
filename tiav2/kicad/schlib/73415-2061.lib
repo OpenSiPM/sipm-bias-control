@@ -1,0 +1,26 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# 73415-2061
+#
+DEF 73415-2061 J 0 30 Y Y 1 F N
+F0 "J" 650 300 50 H V L CNN
+F1 "73415-2061" 650 200 50 H V L CNN
+F2 "73415-2063" 650 100 50 H I L CNN
+F3 "" 650 0 50 H I L CNN
+F4 "MMCX 50 Ohm SMT PCB mount vertical jack Molex 50 Straight PCB Mount MMCX Connector, jack, Solder Termination, DC to 6GHz, RG178" 650 -100 50 H I L CNN "Description"
+F5 "Molex" 650 -300 50 H I L CNN "Manufacturer_Name"
+F6 "73415-2061" 650 -400 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+C 400 -100 112 0 1 0 N
+P 2 0 1 0 200 -100 400 -100 N
+P 5 0 1 6 200 100 600 100 600 -300 200 -300 200 100 N
+X 1 1 0 -100 200 R 50 50 0 0 U
+X 2 2 400 -500 200 U 50 50 0 0 U
+X 3 3 400 -500 200 U 50 50 0 0 U N
+X 4 4 400 -500 200 U 50 50 0 0 U N
+X 5 5 400 -500 200 U 50 50 0 0 U N
+ENDDRAW
+ENDDEF
+#
+#End Library
