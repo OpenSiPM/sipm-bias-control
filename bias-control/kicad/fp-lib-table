@@ -1,3 +1,4 @@
 (fp_lib_table
-  (lib (name footprints)(type KiCad)(uri ${KIPRJMOD}/footprints.pretty)(options "")(descr ""))
+  (lib (name "footprints")(type "KiCad")(uri "${KIPRJMOD}/footprints.pretty")(options "")(descr ""))
+  (lib (name "CX80B1-24P")(type "Legacy")(uri "${KIPRJMOD}/footprints.pretty/CX80B1-24P.mod")(options "")(descr ""))
 )
