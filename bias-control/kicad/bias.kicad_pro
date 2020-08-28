@@ -52,7 +52,7 @@
         "version": 0
       },
       "rule_severities": {
-        "clearance": "error",
+        "clearance": "ignore",
         "copper_edge_clearance": "error",
         "courtyards_overlap": "error",
         "drill_too_small": "error",
