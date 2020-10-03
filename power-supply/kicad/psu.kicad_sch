@@ -1071,7 +1071,7 @@
     (property "Reference" "R8" (id 0) (at 249.555 114.935 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "75k" (id 1) (at 257.81 114.935 0)
+    (property "Value" "64.9k" (id 1) (at 257.81 114.935 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "footprints:R_0603_1608Metric" (id 2) (at 250.825 116.205 0)
