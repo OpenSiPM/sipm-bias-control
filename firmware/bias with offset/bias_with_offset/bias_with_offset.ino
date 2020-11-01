@@ -82,7 +82,7 @@ void readEEPROM()
   else
   {
     char buf[30];
-    sprintf(buf, "Invalid EEPROM value: '%s'\n", temp);
+    sprintf(buf, "Invalid EEPROM value: '%d'\n", temp);
     Serial.print(buf);
   }
 }
