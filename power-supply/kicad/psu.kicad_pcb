@@ -1,4 +1,4 @@
-(kicad_pcb (version 20200922) (generator pcbnew)
+(kicad_pcb (version 20201002) (generator pcbnew)
 
   (general
     (thickness 1.6)
@@ -44,6 +44,7 @@
     )
     (pcbplotparams
       (layerselection 0x00010f0_ffffffff)
+      (disableapertmacros false)
       (usegerberextensions false)
       (usegerberattributes false)
       (usegerberadvancedattributes false)
@@ -51,7 +52,6 @@
       (svguseinch false)
       (svgprecision 6)
       (excludeedgelayer true)
-      (linewidth 0.100000)
       (plotframeref false)
       (viasonmask false)
       (mode 1)
@@ -711,7 +711,7 @@
       (effects (font (size 0.6 0.6) (thickness 0.1)))
       (tstamp f37a61e4-1b28-473e-85c9-e706cc3690ca)
     )
-    (fp_text value "4.7u" (at 0 1.43 90) (layer "F.Fab")
+    (fp_text value "4.7u" (at -0.062501 -1.1824 90) (layer "F.Fab")
       (effects (font (size 0.6 0.6) (thickness 0.1)))
       (tstamp e47b809c-521c-4da2-9151-f8a445cbf5ab)
     )
@@ -750,7 +750,7 @@
       (effects (font (size 0.5 0.5) (thickness 0.1)))
       (tstamp 2f7d7194-2117-4e64-91e6-8624bf762bdf)
     )
-    (fp_text value "1uH" (at 0 1.43) (layer "F.Fab")
+    (fp_text value "1uH" (at 0 1.43) (layer "F.Fab") hide
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 1554f092-5669-43be-8af1-87ba2024a2e8)
     )
@@ -789,7 +789,7 @@
       (effects (font (size 0.6 0.6) (thickness 0.1)))
       (tstamp 01b49e70-caaf-4c23-88a1-51a06236ef94)
     )
-    (fp_text value ".5" (at 0 1.43) (layer "F.Fab")
+    (fp_text value ".5" (at 0 1.43) (layer "F.Fab") hide
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 1c8def91-6b65-49ca-bb46-f8c5def3755d)
     )
@@ -828,7 +828,7 @@
       (effects (font (size 0.6 0.6) (thickness 0.1)))
       (tstamp 37ee1e51-3a87-41d9-9d21-6b5a1ad406e8)
     )
-    (fp_text value "22u" (at 0 1.43) (layer "F.Fab")
+    (fp_text value "22u" (at 1.4 1.150001) (layer "F.Fab")
       (effects (font (size 0.6 0.6) (thickness 0.1)))
       (tstamp 4c9794b3-8a31-481e-a34c-db472137aab8)
     )
@@ -1040,7 +1040,7 @@
       )
     )
     (filled_polygon
-      (layer F.Cu)
+      (layer "F.Cu")
       (pts
         (xy 195.325684 92.852139)
         (xy 195.323841 92.864267)
@@ -2400,7 +2400,7 @@
       )
     )
     (filled_polygon
-      (layer F.Cu)
+      (layer "F.Cu")
       (pts
         (xy 204.887398 90.492691)
         (xy 205.459519 90.790735)
@@ -2545,7 +2545,7 @@
       )
     )
     (filled_polygon
-      (layer B.Cu)
+      (layer "B.Cu")
       (pts
         (xy 195.325684 92.852139)
         (xy 195.323841 92.864267)

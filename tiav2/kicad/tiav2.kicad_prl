@@ -1,5 +1,17 @@
 {
   "board": {
+    "active_layer": 48,
+    "active_layer_preset": "",
+    "hidden_nets": [],
+    "high_contrast_mode": 0,
+    "net_color_mode": 1,
+    "opacity": {
+      "pads": 1.0,
+      "tracks": 1.0,
+      "vias": 1.0,
+      "zones": 0.6
+    },
+    "ratsnest_display_mode": 0,
     "selection_filter": {
       "dimensions": true,
       "footprints": true,
@@ -44,12 +56,17 @@
       27,
       28,
       29,
-      30
+      30,
+      37,
+      38
     ],
-    "visible_layers": "01090_80000001"
+    "visible_layers": "0011040_80000001"
   },
   "meta": {
     "filename": "tiav2.kicad_prl",
-    "version": 1
+    "version": 2
+  },
+  "project": {
+    "files": []
   }
 }
