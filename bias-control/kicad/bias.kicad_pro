@@ -306,6 +306,7 @@
       "global_label_dangling": "error",
       "hier_label_mismatch": "error",
       "label_dangling": "error",
+      "lib_symbol_issues": "warning",
       "multiple_net_names": "error",
       "net_not_bus_member": "error",
       "no_connect_connected": "error",
@@ -313,6 +314,7 @@
       "pin_not_connected": "error",
       "pin_not_driven": "error",
       "pin_to_pin": "warning",
+      "power_pin_not_driven": "error",
       "similar_labels": "error",
       "unresolved_variable": "error",
       "wire_dangling": "error"
@@ -371,6 +373,11 @@
       "default_text_size": 50.0,
       "default_wire_thickness": 6.0,
       "field_names": [],
+      "intersheets_ref_prefix": "",
+      "intersheets_ref_short": false,
+      "intersheets_ref_show": false,
+      "intersheets_ref_suffix": "",
+      "junction_size_choice": 3,
       "pin_symbol_size": 25.0,
       "text_offset_ratio": 0.3
     },
@@ -389,7 +396,7 @@
   },
   "sheets": [
     [
-      "ba58d79a-e40c-438b-81e6-5e6e9ac07fe7",
+      "b3109873-b8f2-4d85-8b18-c0fd075b55f8",
       ""
     ]
   ],
