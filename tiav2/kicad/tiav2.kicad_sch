@@ -1,11 +1,11 @@
-(kicad_sch (version 20200618) (host eeschema "(5.99.0-2215-gb084305b1)")
+(kicad_sch (version 20201015) (generator eeschema)
 
   (page 1 1)
 
   (paper "A4")
 
   (lib_symbols
-    (symbol "Connector:Conn_Coaxial" (pin_names hide)
+    (symbol "Connector:Conn_Coaxial" (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "J" (id 0) (at 0.254 3.048 0)
         (effects (font (size 1.27 1.27)))
       )
@@ -24,7 +24,7 @@
       (property "ki_description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, ...)" (id 5) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_fp_filters" "*BNC*\n*SMA*\n*SMB*\n*SMC*\n*Cinch*" (id 6) (at 0 0 0)
+      (property "ki_fp_filters" "*BNC* *SMA* *SMB* *SMC* *Cinch*" (id 6) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (symbol "Conn_Coaxial_0_1"
@@ -36,11 +36,17 @@
         )
         (circle (center 0 0) (radius 0.508) (stroke (width 0.2032)) (fill (type none)))
         (polyline
-          (pts (xy -2.54 0) (xy -0.508 0))
+          (pts
+            (xy -2.54 0)
+            (xy -0.508 0)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0 -2.54) (xy 0 -1.778))
+          (pts
+            (xy 0 -2.54)
+            (xy 0 -1.778)
+          )
           (stroke (width 0)) (fill (type none))
         )
       )
@@ -55,7 +61,7 @@
         )
       )
     )
-    (symbol "Connector_Generic:Conn_01x06" (pin_names hide)
+    (symbol "Connector_Generic:Conn_01x06" (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "J" (id 0) (at 0 7.62 0)
         (effects (font (size 1.27 1.27)))
       )
@@ -119,7 +125,7 @@
         )
       )
     )
-    (symbol "Device:C_Small" (pin_numbers hide) (pin_names (offset 0.254) hide)
+    (symbol "Device:C_Small" (pin_numbers hide) (pin_names (offset 0.254) hide) (in_bom yes) (on_board yes)
       (property "Reference" "C" (id 0) (at 0.254 1.778 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -137,11 +143,17 @@
       )
       (symbol "C_Small_0_1"
         (polyline
-          (pts (xy -1.524 -0.508) (xy 1.524 -0.508))
+          (pts
+            (xy -1.524 -0.508)
+            (xy 1.524 -0.508)
+          )
           (stroke (width 0.3302)) (fill (type none))
         )
         (polyline
-          (pts (xy -1.524 0.508) (xy 1.524 0.508))
+          (pts
+            (xy -1.524 0.508)
+            (xy 1.524 0.508)
+          )
           (stroke (width 0.3048)) (fill (type none))
         )
       )
@@ -156,7 +168,7 @@
         )
       )
     )
-    (symbol "Device:L_Small" (pin_numbers hide) (pin_names (offset 0.254) hide)
+    (symbol "Device:L_Small" (pin_numbers hide) (pin_names (offset 0.254) hide) (in_bom yes) (on_board yes)
       (property "Reference" "L" (id 0) (at 0.762 1.016 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -169,7 +181,7 @@
       (property "Datasheet" "" (id 3) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_fp_filters" "Choke_*\n*Coil*\nInductor_*\nL_*" (id 4) (at 0 0 0)
+      (property "ki_fp_filters" "Choke_* *Coil* Inductor_* L_*" (id 4) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (symbol "L_Small_0_1"
@@ -197,7 +209,7 @@
         )
       )
     )
-    (symbol "Device:R_Small_US" (pin_numbers hide) (pin_names (offset 0.254) hide)
+    (symbol "Device:R_Small_US" (pin_numbers hide) (pin_names (offset 0.254) hide) (in_bom yes) (on_board yes)
       (property "Reference" "R" (id 0) (at 0.762 0.508 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -215,14 +227,22 @@
       )
       (symbol "R_Small_US_1_1"
         (polyline
-          (pts (xy 0 0) (xy 1.016 -0.381) (xy 0 -0.762) (xy -1.016 -1.143)
-               (xy 0 -1.524)
+          (pts
+            (xy 0 0)
+            (xy 1.016 -0.381)
+            (xy 0 -0.762)
+            (xy -1.016 -1.143)
+            (xy 0 -1.524)
           )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0 1.524) (xy 1.016 1.143) (xy 0 0.762) (xy -1.016 0.381)
-               (xy 0 0)
+          (pts
+            (xy 0 1.524)
+            (xy 1.016 1.143)
+            (xy 0 0.762)
+            (xy -1.016 0.381)
+            (xy 0 0)
           )
           (stroke (width 0)) (fill (type none))
         )
@@ -236,7 +256,7 @@
         )
       )
     )
-    (symbol "Device:SIPM" (pin_numbers hide) (pin_names (offset 0.508) hide)
+    (symbol "Device:SIPM" (pin_numbers hide) (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "D" (id 0) (at 1.778 3.048 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -252,28 +272,50 @@
       (symbol "SIPM_0_1"
         (circle (center -1.27 0) (radius 2.8448) (stroke (width 0)) (fill (type none)))
         (polyline
-          (pts (xy -2.54 1.27) (xy -2.54 -1.27))
+          (pts
+            (xy -2.54 1.27)
+            (xy -2.54 -1.27)
+          )
           (stroke (width 0.2032)) (fill (type none))
         )
         (polyline
-          (pts (xy -0.762 3.048) (xy -0.254 3.048))
+          (pts
+            (xy -0.762 3.048)
+            (xy -0.254 3.048)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0 0) (xy -2.54 0))
+          (pts
+            (xy 0 0)
+            (xy -2.54 0)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0.762 4.572) (xy -0.762 3.048) (xy -0.762 3.556))
+          (pts
+            (xy 0.762 4.572)
+            (xy -0.762 3.048)
+            (xy -0.762 3.556)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0 -1.27) (xy 0 1.27) (xy -2.54 0) (xy 0 -1.27))
+          (pts
+            (xy 0 -1.27)
+            (xy 0 1.27)
+            (xy -2.54 0)
+            (xy 0 -1.27)
+          )
           (stroke (width 0.2032)) (fill (type none))
         )
         (polyline
-          (pts (xy 2.032 4.572) (xy 0.508 3.048) (xy 0.508 3.556) (xy 0.508 3.048)
-               (xy 1.016 3.048)
+          (pts
+            (xy 2.032 4.572)
+            (xy 0.508 3.048)
+            (xy 0.508 3.556)
+            (xy 0.508 3.048)
+            (xy 1.016 3.048)
           )
           (stroke (width 0)) (fill (type none))
         )
@@ -295,7 +337,7 @@
         )
       )
     )
-    (symbol "OPA847:OPA847IDBVT" (pin_names (offset 0.254))
+    (symbol "OPA847:OPA847IDBVT" (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
       (property "Reference" "U" (id 0) (at 6.35 39.37 0)
         (effects (font (size 1.524 1.524)))
       )
@@ -308,12 +350,17 @@
       (property "Datasheet" "" (id 3) (at 0 0 0)
         (effects (font (size 1.524 1.524)))
       )
-      (property "ki_fp_filters" "DBV6\nDBV6-M\nDBV6-L" (id 4) (at 0 0 0)
+      (property "ki_fp_filters" "DBV6 DBV6-M DBV6-L" (id 4) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (symbol "OPA847IDBVT_1_1"
         (polyline
-          (pts (xy 8.89 25.4) (xy 8.89 38.1) (xy 21.59 31.75) (xy 8.89 25.4))
+          (pts
+            (xy 8.89 25.4)
+            (xy 8.89 38.1)
+            (xy 21.59 31.75)
+            (xy 8.89 25.4)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (pin output line (at 29.21 31.75 180) (length 7.62)
@@ -344,7 +391,7 @@
         )
       )
     )
-    (symbol "power:+5V" (power) (pin_names (offset 0))
+    (symbol "power:+5V" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (id 0) (at 0 -3.81 0)
         (effects (font (size 1.27 1.27)) hide)
       )
@@ -359,15 +406,24 @@
       )
       (symbol "+5V_0_1"
         (polyline
-          (pts (xy -0.762 1.27) (xy 0 2.54))
+          (pts
+            (xy -0.762 1.27)
+            (xy 0 2.54)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0 0) (xy 0 2.54))
+          (pts
+            (xy 0 0)
+            (xy 0 2.54)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0 2.54) (xy 0.762 1.27))
+          (pts
+            (xy 0 2.54)
+            (xy 0.762 1.27)
+          )
           (stroke (width 0)) (fill (type none))
         )
       )
@@ -378,7 +434,7 @@
         )
       )
     )
-    (symbol "power:+VDC" (power) (pin_names (offset 0))
+    (symbol "power:+VDC" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (id 0) (at 0 -2.54 0)
         (effects (font (size 1.27 1.27)) hide)
       )
@@ -394,15 +450,24 @@
       (symbol "+VDC_0_1"
         (circle (center 0 3.175) (radius 1.905) (stroke (width 0.254)) (fill (type none)))
         (polyline
-          (pts (xy -1.143 3.175) (xy 1.143 3.175))
+          (pts
+            (xy -1.143 3.175)
+            (xy 1.143 3.175)
+          )
           (stroke (width 0.508)) (fill (type none))
         )
         (polyline
-          (pts (xy 0 0) (xy 0 1.27))
+          (pts
+            (xy 0 0)
+            (xy 0 1.27)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0 2.032) (xy 0 4.318))
+          (pts
+            (xy 0 2.032)
+            (xy 0 4.318)
+          )
           (stroke (width 0.508)) (fill (type none))
         )
       )
@@ -413,7 +478,7 @@
         )
       )
     )
-    (symbol "power:GND" (power) (pin_names (offset 0))
+    (symbol "power:GND" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (id 0) (at 0 -6.35 0)
         (effects (font (size 1.27 1.27)) hide)
       )
@@ -428,8 +493,13 @@
       )
       (symbol "GND_0_1"
         (polyline
-          (pts (xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54)
-               (xy -1.27 -1.27) (xy 0 -1.27)
+          (pts
+            (xy 0 0)
+            (xy 0 -1.27)
+            (xy 1.27 -1.27)
+            (xy 0 -2.54)
+            (xy -1.27 -1.27)
+            (xy 0 -1.27)
           )
           (stroke (width 0)) (fill (type none))
         )
@@ -441,7 +511,7 @@
         )
       )
     )
-    (symbol "power:LINE" (power) (pin_names (offset 0))
+    (symbol "power:LINE" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (id 0) (at 0 -3.81 0)
         (effects (font (size 1.27 1.27)) hide)
       )
@@ -457,7 +527,10 @@
       (symbol "LINE_0_1"
         (circle (center 0 1.905) (radius 0.635) (stroke (width 0)) (fill (type none)))
         (polyline
-          (pts (xy 0 0) (xy 0 1.27))
+          (pts
+            (xy 0 0)
+            (xy 0 1.27)
+          )
           (stroke (width 0)) (fill (type none))
         )
       )
@@ -468,7 +541,7 @@
         )
       )
     )
-    (symbol "power:VDDA" (power) (pin_names (offset 0))
+    (symbol "power:VDDA" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (id 0) (at 0 -3.81 0)
         (effects (font (size 1.27 1.27)) hide)
       )
@@ -484,7 +557,10 @@
       (symbol "VDDA_0_1"
         (circle (center 0 1.905) (radius 0.635) (stroke (width 0)) (fill (type none)))
         (polyline
-          (pts (xy 0 0) (xy 0 1.27))
+          (pts
+            (xy 0 0)
+            (xy 0 1.27)
+          )
           (stroke (width 0)) (fill (type none))
         )
       )
@@ -495,7 +571,7 @@
         )
       )
     )
-    (symbol "power:VSSA" (power) (pin_names (offset 0))
+    (symbol "power:VSSA" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (id 0) (at 0 -3.81 0)
         (effects (font (size 1.27 1.27)) hide)
       )
@@ -511,7 +587,10 @@
       (symbol "VSSA_0_1"
         (circle (center 0 1.905) (radius 0.635) (stroke (width 0)) (fill (type none)))
         (polyline
-          (pts (xy 0 0) (xy 0 1.27))
+          (pts
+            (xy 0 0)
+            (xy 0 1.27)
+          )
           (stroke (width 0)) (fill (type none))
         )
       )
@@ -524,20 +603,20 @@
     )
   )
 
-  (junction (at 48.387 95.885) (diameter 0) (color 0 0 0 0))
-  (junction (at 64.262 95.885) (diameter 0) (color 0 0 0 0))
-  (junction (at 71.12 95.885) (diameter 0) (color 0 0 0 0))
-  (junction (at 114.808 107.95) (diameter 0) (color 0 0 0 0))
-  (junction (at 114.808 126.238) (diameter 0) (color 0 0 0 0))
-  (junction (at 158.75 112.014) (diameter 0) (color 0 0 0 0))
-  (junction (at 158.75 125.095) (diameter 0) (color 0 0 0 0))
-  (junction (at 165.1 111.76) (diameter 0) (color 0 0 0 0))
-  (junction (at 165.1 125.095) (diameter 0) (color 0 0 0 0))
-  (junction (at 170.18 107.95) (diameter 0) (color 0 0 0 0))
-  (junction (at 171.45 111.76) (diameter 0) (color 0 0 0 0))
-  (junction (at 180.975 86.995) (diameter 0) (color 0 0 0 0))
-  (junction (at 196.215 86.995) (diameter 0) (color 0 0 0 0))
-  (junction (at 207.01 110.49) (diameter 0) (color 0 0 0 0))
+  (junction (at 48.387 95.885) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 64.262 95.885) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 71.12 95.885) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 114.808 107.95) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 114.808 126.238) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 158.75 112.014) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 158.75 125.095) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 165.1 111.76) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 165.1 125.095) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 170.18 107.95) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 171.45 111.76) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 180.975 86.995) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 196.215 86.995) (diameter 0.3048) (color 0 0 0 0))
+  (junction (at 207.01 110.49) (diameter 0.3048) (color 0 0 0 0))
 
   (no_connect (at 189.23 121.92))
 
@@ -1159,7 +1238,7 @@
     (property "Value" "10" (id 1) (at 59.182 93.98 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "R_0402_1005Metric" (id 2) (at 55.372 95.885 0)
+    (property "Footprint" "footprints:R_0402_1005Metric" (id 2) (at 55.372 95.885 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 55.372 95.885 0)
@@ -1176,7 +1255,7 @@
     (property "Value" "3.3" (id 1) (at 117.983 115.57 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "R_0402_1005Metric" (id 2) (at 114.808 113.03 0)
+    (property "Footprint" "footprints:R_0402_1005Metric" (id 2) (at 114.808 113.03 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 114.808 113.03 0)
@@ -1193,7 +1272,7 @@
     (property "Value" "33" (id 1) (at 133.985 106.045 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "R_0402_1005Metric" (id 2) (at 129.54 107.95 0)
+    (property "Footprint" "footprints:R_0402_1005Metric" (id 2) (at 129.54 107.95 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 129.54 107.95 0)
@@ -1210,7 +1289,7 @@
     (property "Value" "5k" (id 1) (at 144.78 116.84 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "R_0402_1005Metric" (id 2) (at 142.24 114.554 0)
+    (property "Footprint" "footprints:R_0402_1005Metric" (id 2) (at 142.24 114.554 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 142.24 114.554 0)
@@ -1227,7 +1306,7 @@
     (property "Value" "5k" (id 1) (at 163.195 120.65 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "R_0402_1005Metric" (id 2) (at 158.75 118.745 0)
+    (property "Footprint" "footprints:R_0402_1005Metric" (id 2) (at 158.75 118.745 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 158.75 118.745 0)
@@ -1244,7 +1323,7 @@
     (property "Value" "1.5k" (id 1) (at 192.405 85.09 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "R_0402_1005Metric" (id 2) (at 187.96 86.995 0)
+    (property "Footprint" "footprints:R_0402_1005Metric" (id 2) (at 187.96 86.995 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 187.96 86.995 0)
@@ -1261,7 +1340,7 @@
     (property "Value" "50" (id 1) (at 231.521 108.585 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "R_0402_1005Metric" (id 2) (at 227.076 110.49 0)
+    (property "Footprint" "footprints:R_0402_1005Metric" (id 2) (at 227.076 110.49 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 227.076 110.49 0)
@@ -1278,7 +1357,7 @@
     (property "Value" "1u" (id 1) (at 50.7238 102.743 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "footprints:C_0805_2012Metric" (id 2) (at 48.387 101.6 0)
+    (property "Footprint" "Resistor_SMD:R_1206_3216Metric" (id 2) (at 48.387 101.6 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 48.387 101.6 0)
@@ -1295,7 +1374,7 @@
     (property "Value" "1u" (id 1) (at 61.925 102.743 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "footprints:C_0805_2012Metric" (id 2) (at 64.262 101.6 0)
+    (property "Footprint" "Resistor_SMD:R_1206_3216Metric" (id 2) (at 64.262 101.6 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 64.262 101.6 0)
@@ -1312,7 +1391,7 @@
     (property "Value" "1u" (id 1) (at 73.457 102.743 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "footprints:C_0805_2012Metric" (id 2) (at 71.12 101.6 0)
+    (property "Footprint" "Resistor_SMD:R_1206_3216Metric" (id 2) (at 71.12 101.6 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 71.12 101.6 0)
@@ -1329,7 +1408,7 @@
     (property "Value" "4.7u" (id 1) (at 73.025 44.45 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "C_0402_1005Metric" (id 2) (at 72.39 42.545 0)
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric" (id 2) (at 72.39 42.545 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 72.39 42.545 0)
@@ -1346,7 +1425,7 @@
     (property "Value" "4.7u" (id 1) (at 80.01 44.45 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "C_0402_1005Metric" (id 2) (at 79.375 42.545 0)
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric" (id 2) (at 79.375 42.545 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 79.375 42.545 0)
@@ -1363,7 +1442,7 @@
     (property "Value" "0.1u" (id 1) (at 124.46 45.085 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "C_0402_1005Metric" (id 2) (at 123.825 43.18 0)
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric" (id 2) (at 123.825 43.18 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 123.825 43.18 0)
@@ -1380,7 +1459,7 @@
     (property "Value" "0.1u" (id 1) (at 132.08 45.085 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "C_0402_1005Metric" (id 2) (at 131.445 43.18 0)
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric" (id 2) (at 131.445 43.18 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 131.445 43.18 0)
@@ -1397,7 +1476,7 @@
     (property "Value" "0.1u" (id 1) (at 165.735 120.65 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "C_0402_1005Metric" (id 2) (at 165.1 118.745 0)
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric" (id 2) (at 165.1 118.745 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 165.1 118.745 0)
@@ -1411,10 +1490,10 @@
     (property "Reference" "C8" (id 0) (at 172.085 116.84 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "1u" (id 1) (at 172.085 120.65 0)
+    (property "Value" "4.7u" (id 1) (at 172.085 120.65 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "C_0402_1005Metric" (id 2) (at 171.45 118.745 0)
+    (property "Footprint" "footprints:C_0402_1005Metric" (id 2) (at 171.45 118.745 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 171.45 118.745 0)
@@ -1431,7 +1510,7 @@
     (property "Value" "1.0p" (id 1) (at 193.04 78.74 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "C_0402_1005Metric" (id 2) (at 187.96 81.28 0)
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric" (id 2) (at 187.96 81.28 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 187.96 81.28 0)
@@ -1536,147 +1615,151 @@
     )
   )
 
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+
   (symbol_instances
     (path "/00000000-0000-0000-0000-00005dbb76fd"
-      (reference "#PWR01") (unit 1)
+      (reference "#PWR01") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbc2516"
-      (reference "#PWR02") (unit 1)
+      (reference "#PWR02") (unit 1) (value "+VDC") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbb439f"
-      (reference "#PWR03") (unit 1)
+      (reference "#PWR03") (unit 1) (value "VSSA") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbb40a9"
-      (reference "#PWR04") (unit 1)
+      (reference "#PWR04") (unit 1) (value "VDDA") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbb8157"
-      (reference "#PWR05") (unit 1)
+      (reference "#PWR05") (unit 1) (value "+VDC") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbc4458"
-      (reference "#PWR06") (unit 1)
+      (reference "#PWR06") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbc5df2"
-      (reference "#PWR07") (unit 1)
+      (reference "#PWR07") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dc26ce3"
-      (reference "#PWR08") (unit 1)
+      (reference "#PWR08") (unit 1) (value "VDDA") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dc1e04c"
-      (reference "#PWR09") (unit 1)
+      (reference "#PWR09") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbe3390"
-      (reference "#PWR010") (unit 1)
+      (reference "#PWR010") (unit 1) (value "VSSA") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dc259e5"
-      (reference "#PWR011") (unit 1)
+      (reference "#PWR011") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbc76aa"
-      (reference "#PWR012") (unit 1)
+      (reference "#PWR012") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbedd5e"
-      (reference "#PWR013") (unit 1)
+      (reference "#PWR013") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbddde7"
-      (reference "#PWR014") (unit 1)
+      (reference "#PWR014") (unit 1) (value "VDDA") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbe253c"
-      (reference "#PWR015") (unit 1)
+      (reference "#PWR015") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbda3e8"
-      (reference "#PWR016") (unit 1)
+      (reference "#PWR016") (unit 1) (value "VDDA") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbdb4b6"
-      (reference "#PWR017") (unit 1)
+      (reference "#PWR017") (unit 1) (value "VSSA") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dc1c8fb"
-      (reference "#PWR018") (unit 1)
+      (reference "#PWR018") (unit 1) (value "VSSA") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbdf977"
-      (reference "#PWR019") (unit 1)
+      (reference "#PWR019") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dc042c0"
-      (reference "#PWR020") (unit 1)
+      (reference "#PWR020") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dc539ce"
-      (reference "#PWR028") (unit 1)
+      (reference "#PWR028") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dba5394"
-      (reference "#PWR0101") (unit 1)
+      (reference "#PWR0101") (unit 1) (value "+5V") (footprint "")
     )
     (path "/c25922f9-822d-4ed6-82ab-81e12852f8dc"
-      (reference "#PWR0102") (unit 1)
+      (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005f15c90c"
-      (reference "#PWR0103") (unit 1)
+      (reference "#PWR0103") (unit 1) (value "LINE") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005f15e155"
-      (reference "#PWR0104") (unit 1)
+      (reference "#PWR0104") (unit 1) (value "LINE") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005dbc5dec"
-      (reference "C1") (unit 1)
+      (reference "C1") (unit 1) (value "1u") (footprint "Resistor_SMD:R_1206_3216Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbd8414"
-      (reference "C2") (unit 1)
+      (reference "C2") (unit 1) (value "1.0p") (footprint "Capacitor_SMD:C_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbc39d2"
-      (reference "C3") (unit 1)
+      (reference "C3") (unit 1) (value "1u") (footprint "Resistor_SMD:R_1206_3216Metric")
     )
     (path "/8f0b639f-c07e-4a44-a366-683be230ad00"
-      (reference "C4") (unit 1)
+      (reference "C4") (unit 1) (value "1u") (footprint "Resistor_SMD:R_1206_3216Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbe2524"
-      (reference "C5") (unit 1)
+      (reference "C5") (unit 1) (value "0.1u") (footprint "Capacitor_SMD:C_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbdd269"
-      (reference "C6") (unit 1)
+      (reference "C6") (unit 1) (value "4.7u") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbe5445"
-      (reference "C7") (unit 1)
+      (reference "C7") (unit 1) (value "0.1u") (footprint "Capacitor_SMD:C_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbe62e5"
-      (reference "C8") (unit 1)
+      (reference "C8") (unit 1) (value "4.7u") (footprint "footprints:C_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbdc252"
-      (reference "C9") (unit 1)
+      (reference "C9") (unit 1) (value "0.1u") (footprint "Capacitor_SMD:C_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbe252a"
-      (reference "C10") (unit 1)
+      (reference "C10") (unit 1) (value "4.7u") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbbfa2e"
-      (reference "D1") (unit 1)
+      (reference "D1") (unit 1) (value "SIPM") (footprint "footprints:S14420")
     )
     (path "/00000000-0000-0000-0000-00005dba068e"
-      (reference "J1") (unit 1)
+      (reference "J1") (unit 1) (value "SSQ-103-01-G-D") (footprint "footprints:PinHeader_2x03_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-00005f15743d"
-      (reference "J2") (unit 1)
+      (reference "J2") (unit 1) (value "Conn_Coaxial") (footprint "Connector_Coaxial:SMB_Jack_Vertical")
     )
     (path "/00000000-0000-0000-0000-00005dbfef84"
-      (reference "L1") (unit 1)
+      (reference "L1") (unit 1) (value "0.1uH") (footprint "footprints:L_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-00005f0ac3f0"
-      (reference "R1") (unit 1)
+      (reference "R1") (unit 1) (value "50") (footprint "footprints:R_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbd7f8f"
-      (reference "R2") (unit 1)
+      (reference "R2") (unit 1) (value "1.5k") (footprint "footprints:R_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbe81d1"
-      (reference "R3") (unit 1)
+      (reference "R3") (unit 1) (value "5k") (footprint "footprints:R_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dc01001"
-      (reference "R5") (unit 1)
+      (reference "R5") (unit 1) (value "3.3") (footprint "footprints:R_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005f149167"
-      (reference "R7") (unit 1)
+      (reference "R7") (unit 1) (value "5k") (footprint "footprints:R_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbc3104"
-      (reference "R11") (unit 1)
+      (reference "R11") (unit 1) (value "10") (footprint "footprints:R_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbffa95"
-      (reference "R23") (unit 1)
+      (reference "R23") (unit 1) (value "33") (footprint "footprints:R_0402_1005Metric")
     )
     (path "/00000000-0000-0000-0000-00005dbb3064"
-      (reference "U1") (unit 1)
+      (reference "U1") (unit 1) (value "OPA847IDBVT") (footprint "footprints:OPA847IDBVT")
     )
   )
 )
