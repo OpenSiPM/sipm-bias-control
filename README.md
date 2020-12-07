@@ -22,6 +22,10 @@ The use of current domain PZC has several advantages over conventional methods. 
 
 [tiav2 bill of materials](http://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/tiav2/kicad/bom/ibom.html)
 
+# firmware
 
+The firmware folder includes both the Arudino bootloader for the SAMD21 microcontroller and a basic program for controlling the bias and offset voltages.  See [fimrware setup instructions](https://github.com/OpenSiPM/sipm-bias-control/wiki/Setting-up-development-tools-and-flashing-firmware).  
+
+The actual firmware commands are sent over the virtual com port to the microcontroller.  "On" turns on the bias generator.  "Off" turns it off.  "gain 1000" sets the gain to 1000".  "gain?" returns the current gain.  "offset 150" sets the tia offset to 150 units.  
 
 
