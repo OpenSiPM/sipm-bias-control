@@ -2,7 +2,7 @@
 
 The sipm-bias-control repository contains the KiCAD design files for a high dynamic range silicon photomultiplier (SiPM) transimpedance amplifier, power suppply, and bias generator designed by Eben Olson and Michael Giacomelli.  The repository is organized into separate folders for each component, with bias-control containing the design files for the high voltage bias generator, power-supply containing the opamp power supply, and tiav2 containing a high dynamic range transimpedance amplifier using current domain pole zero cancellation.  In addition, the firmware folder contains the firmware required to run the bias-control microcontroller.  
 
-All design files are in KiCAD 5.99/6.0. 
+All design files are in KiCAD 5.99/6.0. An [additional ZIP file](https://github.com/OpenSiPM/sipm-bias-control/blob/master/STEP.zip) is provided with .STP 3D models for the board components.  This can be extracted to the root of the repository to insert the STP files into each project.
 
 # bias-control
 
@@ -22,6 +22,10 @@ The use of current domain PZC has several advantages over conventional methods. 
 
 [tiav2 bill of materials](http://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/tiav2/kicad/bom/ibom.html)
 
+# firmware
 
+The firmware folder includes both the Arudino bootloader for the SAMD21 microcontroller and a basic program for controlling the bias and offset voltages.  See [fimrware setup instructions](https://github.com/OpenSiPM/sipm-bias-control/wiki/Setting-up-development-tools-and-flashing-firmware).  
+
+The actual firmware commands are sent over the virtual com port to the microcontroller.  "On" turns on the bias generator.  "Off" turns it off.  "gain 1000" sets the gain to 1000".  "gain?" returns the current gain.  "offset 150" sets the tia offset to 150 units.  
 
 
