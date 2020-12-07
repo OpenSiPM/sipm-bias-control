@@ -2,7 +2,7 @@
 
 The sipm-bias-control repository contains the KiCAD design files for a high dynamic range silicon photomultiplier (SiPM) transimpedance amplifier, power suppply, and bias generator designed by Eben Olson and Michael Giacomelli.  The repository is organized into separate folders for each component, with bias-control containing the design files for the high voltage bias generator, power-supply containing the opamp power supply, and tiav2 containing a high dynamic range transimpedance amplifier using current domain pole zero cancellation.  In addition, the firmware folder contains the firmware required to run the bias-control microcontroller.  
 
-All design files are in KiCAD 5.99/6.0. 
+All design files are in KiCAD 5.99/6.0. An [additional ZIP file](https://github.com/OpenSiPM/sipm-bias-control/blob/master/STEP.zip) is provided with .STP 3D models for the board components.  This can be extracted to the root of the repository to insert the STP files into each project.
 
 # bias-control
 
