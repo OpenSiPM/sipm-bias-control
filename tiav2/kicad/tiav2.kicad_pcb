@@ -1083,7 +1083,7 @@
   (gr_circle (center 200 92) (end 203 92) (layer "Dwgs.User") (width 0.12) (fill none) (tstamp 3b0cb51d-19e3-4fb7-8798-3a87cfc6ecfa))
   (gr_circle (center 200 100) (end 212.573 100) (layer "Dwgs.User") (width 0.12) (fill none) (tstamp f2b6dcee-6b70-483d-9864-e7c0aced8340))
   (gr_circle (center 200 100) (end 212.6746 100) (layer "Edge.Cuts") (width 0.1) (fill none) (tstamp dbaf4dd6-c087-464a-a752-9f3374e70888))
-  (gr_text "SiPM\nTIAv8\n" (at 199.2 107.775) (layer "F.SilkS") (tstamp 1c51c68b-0205-47cd-9977-643744cc1e07)
+  (gr_text "SiPM\nTIAv8.1\n" (at 199.2 107.775) (layer "F.SilkS") (tstamp 1c51c68b-0205-47cd-9977-643744cc1e07)
     (effects (font (size 1.524 1.524) (thickness 0.127)))
   )
 
