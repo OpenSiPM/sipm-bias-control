@@ -10,9 +10,13 @@ This PCB is responsible for generating the high voltage (~50V) required to opera
 
 A list of components required can be viewed online in the interactive [bill of materials](http://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/bias-control/kicad/bom/ibom.html).
 
+![Image of bias generator](https://github.com/OpenSiPM/sipm-bias-control/blob/master/bias-control/bias.jpg)
+
 # power-supply
 
-This PCB takes the +5v from USB and converts to low noise +3.3 and -4.5v used by the opamps.  The asymetric voltages are because the negative rail has a much larger impact on dynamic range, making optimization of the negative voltages a lot more important. [power-supply bill of materials](http://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/power-supply/kicad/bom/ibom.html)
+This PCB takes the +5v from USB and converts to low noise +3.3 and -4.5v used by the opamps.  The asymetric voltages are because the negative rail has a much larger impact on dynamic range, making optimization of the negative voltages a lot more important. A list of components required can be viewed online in the interactive [power-supply bill of materials](http://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/power-supply/kicad/bom/ibom.html)
+
+![Image of power supply board](https://github.com/OpenSiPM/sipm-bias-control/blob/master/power-supply/psu.jpg)
 
 # tiav2
 
@@ -21,6 +25,8 @@ This PCB receives bias and supply voltages from the other boards and emits ampli
 The use of current domain PZC has several advantages over conventional methods.  First, since the slow component of the SiPM response is canceled prior to amplification, the dynamic range is extended by the same factor as the PZC attenuates, in this case, 10-fold.  Second, the impedance of the current divider isolates the amplifier from the large capacitance of the SiPM, resulting in higher bandwidth and much greater stability.  Finally, this design is very simple, requiring only one opamp.  
 
 [tiav2 bill of materials](http://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/tiav2/kicad/bom/ibom.html)
+
+![Image of TIA board](https://github.com/OpenSiPM/sipm-bias-control/blob/master/tiav2/tia.jpg)
 
 # firmware
 
