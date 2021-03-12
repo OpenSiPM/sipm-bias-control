@@ -4,11 +4,15 @@ The OpenSiPM project aims to design high performance, low cost detectors for flu
 
 # overview
 
-The sipm-bias-control repository contains the KiCAD design files for a high dynamic range silicon photomultiplier (SiPM) transimpedance amplifier, power suppply, and bias generator designed by Eben Olson and Michael Giacomelli.  The repository is organized into separate folders for each component, with bias-control containing the design files for the high voltage bias generator, power-supply containing the opamp power supply, and tiav2 containing a high dynamic range transimpedance amplifier using current domain pole zero cancellation.  Each of these components stack together to build a single detector that can be mounted in a conventional SM1 lens tube.  In addition, the firmware folder contains the firmware required to run the bias-control microcontroller.  
+The sipm-bias-control repository contains the KiCAD design files for a high dynamic range silicon photomultiplier (SiPM) transimpedance amplifier, power suppply, and bias generator designed by Eben Olson and Michael Giacomelli.  The repository is organized into separate folders for each component, with bias-control containing the design files for the high voltage bias generator, power-supply containing the opamp power supply, and tiav2 containing a high dynamic range transimpedance amplifier using current domain pole zero cancellation.  Each of these components stack together to build a single detector that can be mounted in a conventional SM1 lens tube.  In addition, the firmware folder contains the firmware required to run the bias-control microcontroller. 
 
 Compared to conventional PMT detectors used in many laser scanning fluorescense microscopes, SiPMs have some advantages, including low cost, high durability, good QE at long wavelengths, and extremely high dynamic range.  The amplifier design presented here is specifically optimized for maximizing dynamic range with a saturation power in excess of 40 billion photons per second, enabling high imaging rates. The disadvantage of the SiPM detectors is relatively high dark current, which makes them less suitable for low speed scanning systems.  However, at high pixel rates, they obtain superior sensitivity to PMTs.  
 
 All design files are in KiCAD 5.99/6.0. An [additional ZIP file](https://github.com/OpenSiPM/sipm-bias-control/blob/master/STEP.zip) is provided with .STP 3D models for the board components.  This can be extracted to the root of the repository to insert the STP files into each project.
+
+# performance
+
+The performance of this detector design is evaluated in the manuscript "Ultrahigh‑speed point scanning two‑photon microscopy using high dynamic range silicon photomultipliers" by Vincent Ching‑Roa et al.  The manuscript can be accessed at no charge here:  https://www.nature.com/articles/s41598-021-84522-0
 
 # bias-control
 
