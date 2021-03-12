@@ -12,6 +12,8 @@ All design files are in KiCAD 5.99/6.0. An [additional ZIP file](https://github.
 
 # performance
 
+![Image of bias generator](https://github.com/OpenSiPM/sipm-bias-control/blob/master/tiav2/comparison_image.jpg)
+
 The performance of this detector design is evaluated in the manuscript "Ultrahigh‑speed point scanning two‑photon microscopy using high dynamic range silicon photomultipliers" by Vincent Ching‑Roa et al.  The manuscript can be accessed at no charge here:  https://www.nature.com/articles/s41598-021-84522-0
 
 # bias-control
