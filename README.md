@@ -58,7 +58,8 @@ Sample Zemax optical design files are provided in the optics demonstrating one p
 
 # ordering boards
 
-Go to https://jlcpcb.com, https://www.seeedstudio.com/fusion_pcb.html or the service of your choice, upload the Gerber files, and pay.  At present prices, 10 boards will cost about 25 dollars shipped to most of the world.  Note that bias generator board is 4 layers while the others are two layer.  
+Go to https://jlcpcb.com, https://www.seeedstudio.com/fusion_pcb.html or the service of your choice, upload the Gerber files, and pay.  At present prices, 10 boards will cost about 25 dollars shipped to most of the world.  Note that bias generator board is 4 layers while the others are two layer.
+Gerber files can be generated from KiCAD using 'File -> Plot'.
 
 # board assembly
 
