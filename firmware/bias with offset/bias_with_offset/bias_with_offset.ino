@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <Adafruit_MCP4728.h>
 
-#define TARGET_SAMD21 0 // toggle true samd21 target or arduino testing target
+#define TARGET_SAMD21 1 // toggle true samd21 target or arduino testing target
 
 #if TARGET_SAMD21
 // Proper at91samd21 build
@@ -254,7 +254,7 @@ void parse_command(char *str)
   {
     tok = strtok(NULL, " \n");
     long millivolt = strtol(tok, NULL, 10);
-    uint16_t vmin = millivoltFromGain(0);    // minimum millivolt depends on calibration
+    uint16_t vmin = millivoltFromGain(g42);    // minimum millivolt depends on calibration
     uint16_t vmax = millivoltFromGain(2000); // maximum millivolt depeneds on calibration
     uint16_t g = gainFromVoltage(millivolt);
     if (millivolt > vmax || millivolt < vmin)
