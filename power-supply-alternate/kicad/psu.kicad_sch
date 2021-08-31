@@ -947,6 +947,21 @@
     (uuid b918d315-e1f8-480c-bde0-d7d4a1767b74)
   )
 
+  (text "Note: TPS7A2042PDBVR is pin compatible, cheaper and has slightly better specs"
+    (at 57.912 96.266 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 8c31f494-bc4c-48ea-9b9b-f146f074e169)
+  )
+  (text "C17 is only needed with TPS79333" (at 59.182 145.796 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid fdca6488-baa2-4939-928a-ab0846733861)
+  )
+  (text "Vout = 1.186*(1+R8/R9)\nValues up to ~ 4.75v work, but are sensitive to USB voltage level"
+    (at 193.294 99.314 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 4ea1f6b7-7e8c-43e3-9b65-1d6eabcf82f7)
+  )
+
   (label "BIAS" (at 81.28 58.42 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 8559c375-23cf-4008-bb98-2eaa3ddc4981)
@@ -1316,7 +1331,7 @@
     (property "Reference" "R8" (id 0) (at 249.555 114.935 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "64.9k" (id 1) (at 257.81 114.935 0)
+    (property "Value" "73.2k" (id 1) (at 257.81 114.935 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "footprints:R_0603_1608Metric" (id 2) (at 250.825 116.205 0)
@@ -1681,7 +1696,7 @@
       (reference "R2") (unit 1) (value "64.9k") (footprint "footprints:R_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-00005b21abec"
-      (reference "R8") (unit 1) (value "64.9k") (footprint "footprints:R_0603_1608Metric")
+      (reference "R8") (unit 1) (value "73.2k") (footprint "footprints:R_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-00005b21b93f"
       (reference "R9") (unit 1) (value "24.9k") (footprint "footprints:R_0603_1608Metric")
