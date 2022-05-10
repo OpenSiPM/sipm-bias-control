@@ -11,6 +11,7 @@ The system has been tested to be limited to approximately 33mA at ~50V see provi
 # Current Limiting Feature
 The current limit can be changed by adjusting Resisitor 13 however the max possible current limit is set by the general voltage drop off of board without the current limiting feature. The cutoff current can be set by using the formula below. See examples of Voltage vs Current curves for 5Ω and 10Ω resistors below.
 Formula: 
+
 <img width="361" alt="image" src="https://user-images.githubusercontent.com/21182901/167533017-04e06f4c-6364-4a5a-95fe-0270fc58a49f.png">
 
 
