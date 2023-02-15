@@ -22,6 +22,8 @@ This PCB is responsible for generating the high voltage (~50V) required to opera
 
 A list of components required can be viewed online in the interactive [bill of materials](http://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/bias-control/kicad/bom/ibom.html).
 
+Note: a more powerful and easier to solder version is also available:  [firmware setup instructions]([bias-control-lt8362](https://github.com/OpenSiPM/sipm-bias-control/tree/master/bias-control-lt8362)).
+
 ![Image of bias generator](https://github.com/OpenSiPM/sipm-bias-control/blob/master/bias-control/bias.jpg)
 
 # power-supply
