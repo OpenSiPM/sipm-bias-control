@@ -1,0 +1,27 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP NE555DR
+D Single Precision Timer
+K
+F http://www.ti.com/lit/ds/symlink/ne555.pdf
+$ENDCMP
+#
+$CMP LT8364EMSE#TRPBF
+D Switching Voltage Regulators Low IQ Boost/SEPIC/ Inverting Converter with 4A, 60V Switch
+K
+F 
+$ENDCMP
+#
+$CMP MCP47FEB22A0-E_ST
+D Microchip Technology Dual channel 12-bit nonvolatile, I2C DAC
+K
+F 
+$ENDCMP
+#
+$CMP MCP47FEB22A2-E_ST
+D Digital to Analog Converters - DAC Dual channel 12-bit nonvolatile, I2C DAC
+K
+F http://www.microchip.com/mymicrochip/filehandler.aspx?ddocname=en573220
+$ENDCMP
+#
+#End Doc Library
