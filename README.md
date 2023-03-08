@@ -51,10 +51,11 @@ The firmware folder includes both the Arudino bootloader for the SAMD21 microcon
 The actual firmware commands are sent over the virtual com port to the microcontroller.  "On" turns on the bias generator.  "Off" turns it off.  "gain 1000" sets the gain to 1000".  "gain?" returns the current gain.  "offset 150" sets the tia offset to 150 units.  
 
 # low pass filter
+The updated tiav3 design incorporates a low pass filter that is suitable for most resonant or polygon scanning applications.
 
-It is important to add an external low pass filter, either in your ADC or inline with it to reject out of band noise.  If you do not have a suitable lowpass on your ADC, the minicircuits BLP-25 is a reasonable choice with relatively little group delay in the pass band:  https://www.minicircuits.com/WebStore/dashboard.html?model=BLP-25%2B
+If you use the tiav2, it is important to add an external low pass filter, either in your ADC or inline with it to reject out of band noise.  If you do not have a suitable lowpass on your ADC, the minicircuits BLP-25 is a reasonable choice with relatively little group delay in the pass band:  https://www.minicircuits.com/WebStore/dashboard.html?model=BLP-25%2B
 
-The bandwidth of a laser scanner is 0.312 times the scan velocity (in meters per second) divided by the spot size (also in meters).  It is a good idea to reduce the bandwidth of the detector as needed with a smaller low pass filter if you do not require 25 MHz at your scan speed.  This will reduce electronic noise. 
+The bandwidth of a laser scanner is 0.312 times the scan velocity (in meters per second) divided by the spot size (also in meters).  It is a good idea to reduce the bandwidth of the detector as needed with a smaller low pass filter if you require less bandwidth at your scan speed.  This will reduce noise. 
 
 # optical design
 
