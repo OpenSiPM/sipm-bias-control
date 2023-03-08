@@ -1,6 +1,6 @@
 # Introduction
 
-This is a new version of the Bias Generator that has an additional customizable current limiting feature, modified components and been designed for easier construction.
+This is a new version of the Bias Generator that has an additional customizable current limiting feature, modified components and been designed for easier construction. It also has much higher output current and can be used to drive larger SiPMs or arrays of multiple SiPMs.  
 
 
 # System - Voltage Drop off at Various Currrent Levels w/o Peak Regulator
@@ -16,6 +16,8 @@ Formula:
 
 
 # Key Component Changes
+LT8362 boost converter enables much higher output current.  
+RT9072A High voltage LDO for filtering provides much better isolation of the boost converter from the load.
 
 
 # Ease of Construction and Use
