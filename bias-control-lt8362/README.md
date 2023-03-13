@@ -1,5 +1,7 @@
 # Introduction
 
+![image](https://user-images.githubusercontent.com/16110774/224592440-e20e4623-2d26-419e-829d-9275bcd94b29.png)
+
 This is a new version of the Bias Generator that has an additional customizable current limiting feature, modified components and been designed for easier construction. It also has much higher output current and can be used to drive larger SiPMs or arrays of multiple SiPMs.  
 
 
@@ -18,7 +20,10 @@ Formula:
 # Key Component Changes
 LT8362 boost converter enables much higher output current.  
 RT9072A High voltage LDO for filtering provides much better isolation of the boost converter from the load.
+USB-B micro instead of C to simplify assembly.
 
+# Firmware changes
+Use the bias_with_offset_LT836X firmware. The firmware now sets both the boost converter voltage (by default to about 52V) and controls the output voltage using the LDO.  Both are under software control, so you can change the indepedently.  Use the "dac" command to set the boost converter voltage.   
 
 # Ease of Construction and Use
 All components have been changed to enable hand soldering of boards as well as increased spacing between critical functions. 
