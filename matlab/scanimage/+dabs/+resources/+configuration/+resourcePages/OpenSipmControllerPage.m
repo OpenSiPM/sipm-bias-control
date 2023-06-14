@@ -1,18 +1,16 @@
-classdef OpensipmPmtControllerPage < dabs.resources.configuration.ResourcePage
+classdef OpenSipmControllerPage < dabs.resources.configuration.ResourcePage
     properties
         pmhCOM
-%         tableAutoOn
     end
     
     methods
-        function obj = OpensipmPmtControllerPage(hResource,hParent)
+        function obj = OpenSipmControllerPage(hResource,hParent)
             obj@dabs.resources.configuration.ResourcePage(hResource,hParent);
         end
         
         function makePanel(obj,hParent)
             most.gui.uicontrol('Parent',hParent,'Style','text','RelPosition', [13 46 120 20],'Tag','txhComPort','String','Serial Port','HorizontalAlignment','right');
             obj.pmhCOM  = most.gui.uicontrol('Parent',hParent,'Style','popupmenu','String',{''},'RelPosition', [140 43 160 20],'Tag','pmhCOM');
-%             obj.tableAutoOn = most.gui.uicontrol('Parent',hParent,'Style','uitable','ColumnFormat',{'logical','numeric'},'ColumnEditable',[true true],'ColumnName',{'Auto on','Wavelength [nm]'},'ColumnWidth',{60 100},'RelPosition', [70 133 240 70],'Tag','tableAutoOn');
         end
         
         function redraw(obj)
@@ -20,22 +18,10 @@ classdef OpensipmPmtControllerPage < dabs.resources.configuration.ResourcePage
             
             obj.pmhCOM.String = [{''}, hCOMs];
             obj.pmhCOM.pmValue = obj.hResource.hCOM;
-            
-            
-%             rowNames = {'SiPM'};
-%             obj.tableAutoOn.hCtl.RowName = rowNames;
-%             obj.tableAutoOn.Data = most.idioms.horzcellcat(num2cell(obj.hResource.autoOn(:)),num2cell(obj.hResource.wavelength_nm(:)));
         end
         
         function apply(obj)
             most.idioms.safeSetProp(obj.hResource,'hCOM',obj.pmhCOM.pmValue); % TODO: Can we integrate multiple SiPM detectors at different COM?
-            
-%             autoOn = cell2mat(obj.tableAutoOn.Data(:,1))';
-%             most.idioms.safeSetProp(obj.hResource,'autoOn',autoOn);
-%             
-%             wavelength_nm = cell2mat(obj.tableAutoOn.Data(:,2))';
-%             most.idioms.safeSetProp(obj.hResource,'wavelength_nm',wavelength_nm);
-            
             obj.hResource.saveMdf();
             obj.hResource.reinit();
         end

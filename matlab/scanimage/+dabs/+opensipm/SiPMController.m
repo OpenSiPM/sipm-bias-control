@@ -1,11 +1,11 @@
-classdef PMTController < dabs.resources.Device & dabs.resources.configuration.HasConfigPage & most.HasMachineDataFile
+classdef SiPMController < dabs.resources.Device & dabs.resources.configuration.HasConfigPage & most.HasMachineDataFile
     properties (SetAccess=protected)
-        ConfigPageClass = 'dabs.resources.configuration.resourcePages.OpensipmPmtControllerPage';
+        ConfigPageClass = 'dabs.resources.configuration.resourcePages.OpenSipmControllerPage';
     end
     
     methods (Static)
         function names = getDescriptiveNames()
-            names = {'OpenSiPM\OpenSiPM SiPM Controller' 'PMT\OpenSiPM SiPM Controller'};
+            names = {'OpenSiPM\OpenSiPM SiPM Controller' 'PMT\OpenSiPM SiPM Controller'};  % Also show up in the PMT group
         end
     end
     %%% Abstract property realizations (most.HasMachineDataFile)
@@ -30,24 +30,19 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
         SERIAL_TIMEOUT     = 1;
     end
     
-    %%% ABSTRACT PROPERTY REALIZATIONS (scaniamge.interfaces.PmtController)
+    %%% ABSTRACT PROPERTY REALIZATIONS (scaniamge.interfaces.SipmController)
     properties (Constant, Hidden)
-        numPmts = 1;                    % [numerical] number of PMTs managed by the PMT controller -- one per com port
+        numSipms = 1;                    % [numerical] number of SiPMs managed by the SiPM controller -- one per com port
     end
     
     properties (SetObservable)
         hCOM = dabs.resources.Resource.empty();
     end
-    
-%     properties (SetObservable, Dependent)
-%         autoOn
-%         wavelength_nm
-%     end
 
     %% Internal Properties
     properties (SetAccess = private, Hidden)
         hSerial = [];
-        hPMTs = dabs.opensipm.pmtcontroller.PMT.empty();
+        hSiPMs = dabs.opensipm.sipmcontroller.SiPM.empty();
         TimeoutTimer = [];
         
         replyPending = false;
@@ -66,12 +61,12 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
     
     %% Lifecycle
     methods
-        function obj = PMTController(name)
+        function obj = SiPMController(name)
             obj@dabs.resources.Device(name);
             obj@most.HasMachineDataFile(true);
             
-            for pmtNum = 1:obj.numPmts
-                obj.hPMTs(pmtNum) = dabs.opensipm.pmtcontroller.PMT(obj,pmtNum);
+            for sipmNum = 1:obj.numSipms
+                obj.hSiPMs(sipmNum) = dabs.opensipm.sipmcontroller.SiPM(obj,sipmNum);
             end
             
             obj.deinit();
@@ -83,8 +78,8 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
             obj.deinit();
             obj.saveCalibration();     
             
-            most.idioms.safeDeleteObj(obj.hPMTs);
-            obj.hPMTs = dabs.opensipm.pmtcontroller.PMT.empty();
+            most.idioms.safeDeleteObj(obj.hSiPMs);
+            obj.hSiPMs = dabs.opensipm.sipmcontroller.SiPM.empty();
         end
     end
     
@@ -102,8 +97,6 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
         
         function success = loadCalibration(obj)
             success = true;
-%             success = success & obj.safeSetPropFromMdf('autoOn', 'autoOn');
-%             success = success & obj.safeSetPropFromMdf('wavelength_nm', 'wavelength_nm');
         end
         
         function saveMdf(obj)
@@ -112,8 +105,6 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
         end
         
         function saveCalibration(obj)
-%             obj.safeWriteVarToHeading('autoOn', obj.autoOn);
-%             obj.safeWriteVarToHeading('wavelength_nm', obj.wavelength_nm);
         end
     end
     
@@ -121,10 +112,10 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
         function deinit(obj)
             obj.errorMsg = 'Uninitialized';
             
-            for pmtNum = 1:numel(obj.hPMTs)
-                hPMT = obj.hPMTs(pmtNum);
-                if most.idioms.isValidObj(hPMT)
-                    hPMT.deinit();
+            for sipmNum = 1:numel(obj.hSiPMs)
+                hSiPM = obj.hSiPMs(sipmNum);
+                if most.idioms.isValidObj(hSiPM)
+                    hSiPM.deinit();
                 end
             end
             
@@ -209,16 +200,10 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
                     warning('Failed to get MDU Description. Device connection suspect!');
                 end
                 
-                obj.errorMsg = ''; % this needs to happen before setMode because writeCommand checks for errors
+                obj.errorMsg = ''; % in case writeCommand checks for errors
                 
-                try
-                    obj.setMode(3);
-                catch
-                    warning('Failed to set MDU Gain Control Mode. Device connection suspect!');
-                end
-                
-                for pmtNum = 1:numel(obj.hPMTs)
-                    obj.hPMTs(pmtNum).reinit();
+                for sipmNum = 1:numel(obj.hSiPMs)
+                    obj.hSiPMs(sipmNum).reinit();
                 end
                 
             catch ME
@@ -233,25 +218,18 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
         function queryStatus(obj)
 %             fprintf('queryStatus...\n');
             % enable
-            obj.writeCommand('on?',@obj.processPMTUpdate);
+            obj.writeCommand('on?',@obj.processSiPMUpdate);
             
             % gain
-            obj.writeCommand('voltage?',@obj.processPMTUpdate);
+            obj.writeCommand('voltage?',@obj.processSiPMUpdate);
             
             % offset
-            obj.writeCommand('offset_voltage?',@obj.processPMTUpdate);
+            obj.writeCommand('offset_voltage?',@obj.processSiPMUpdate);
         end
     end
     
     %% Internal methods
-    methods (Hidden)
-        function setMode(obj, mode)
-            % not implemented
-%             assert(isnumeric(mode) && mode < 4 && mode >= 0, '\nSource must be 0, 1, 2, or 3. Please refer to documentation for further details.\n');
-%             cmd = sprintf('SOURCE %d',mode);
-%             obj.writeCommand(cmd, []);
-        end
-        
+    methods (Hidden)        
         function TimeoutFcn(obj, ~,~)
             if obj.hSerial.BytesAvailable
                 obj.replyAvailable();
@@ -328,42 +306,29 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
                 obj.sendNextCmd();
             catch ME
                 ME.stack(1)
-                fprintf(2,'Error while processing response from PMT: %s\n', ME.message);
+                fprintf(2,'Error while processing response from SiPM: %s\n', ME.message);
             end
         end
         
-        function processPMTUpdate(obj,reply)
+        function processSiPMUpdate(obj,reply)
             switch(obj.lastCmd)
                 case 'on?'
-                    for idx = 1:numel(obj.hPMTs)
+                    for idx = 1:numel(obj.hSiPMs)
                         if ~isempty(reply) && strcmp(strtok(reply), 'on')
-                            obj.hPMTs(idx).setProp('powerOn', 1);
+                            obj.hSiPMs(idx).setProp('powerOn', 1);
                         else
-                            obj.hPMTs(idx).setProp('powerOn', 0);
+                            obj.hSiPMs(idx).setProp('powerOn', 0);
                         end
                     end
                 case 'voltage?'
                     gain_voltage = str2double(reply) / 1000; % mV->V; relies on calibration stored on device
-                    obj.hPMTs(1).setProp('gain_V',gain_voltage);
+                    obj.hSiPMs(1).setProp('gain_V',gain_voltage);
 %                     fprintf('setProp: gain_V=%f\n', gain_voltage);
 
                 case 'offset_voltage?'
                     offset_voltage = str2double(reply) / 1000; %  mV->V; relies on calibration stored on device
-                    obj.hPMTs(1).setProp('gainOffset_V',offset_voltage);
-
+                    obj.hSiPMs(1).setProp('gainOffset_V',offset_voltage);
 %                     fprintf('setProp: gainOffset_V=%f\n', offset_voltage);
-                   
-%                 case 'V'
-%                     volatile = str2double(reply(end));
-%                     volatile = dec2bin(volatile, 9);
-%                     v = [str2double(volatile(4)) str2double(volatile(3))];
-%                     
-%                     for idx = 1:numel(obj.hPMTs)
-%                         obj.hPMTs(idx).setProp('tripped',v(idx));
-%                     end
-                    
-%                 case 'SOURCE'
-%                     obj.mode = str2double(reply);
             end
         end
     end
@@ -387,44 +352,12 @@ classdef PMTController < dabs.resources.Device & dabs.resources.configuration.Ha
                 val.registerUser(obj,'COM Port');
             end
         end
-        
-%         function set.autoOn(obj,val)
-%             validateattributes(val,{'logical','numeric'},{'numel',1,'binary'});
-%             
-%             for idx = 1:numel(obj.hPMTs)
-%                 obj.hPMTs(idx).autoOn = logical(val(idx));
-%             end
-%         end
-%         
-%         function val = get.autoOn(obj)
-%             val = false(1,numel(obj.hPMTs));
-%             for idx = 1:numel(obj.hPMTs)
-%                 val(idx) = obj.hPMTs(idx).autoOn;
-%             end
-%         end
-        
-%         function set.wavelength_nm(obj,val)
-%             validateattributes(val,{'numeric'},{'numel',1,'positive','nonnan','finite','real'});
-%             
-%             for idx = 1:numel(obj.hPMTs)
-%                 obj.hPMTs(idx).wavelength_nm = val(idx);
-%             end
-%         end
-%         
-%         function val = get.wavelength_nm(obj)
-%             val = zeros(1,numel(obj.hPMTs));
-%             for idx = 1:numel(obj.hPMTs)
-%                 val(idx) = obj.hPMTs(idx).wavelength_nm;
-%             end
-%         end
     end
 end
 
 function s = defaultMdfSection()
     s = [...
-            most.HasMachineDataFile.makeEntry('comPort','','Serial port the stage is connected to (e.g. ''COM3'')')...
-%             most.HasMachineDataFile.makeEntry('autoOn',false,'Determines for each PMT if it should automatically be switched on during an acquisition.')...
-%             most.HasMachineDataFile.makeEntry('wavelength_nm',509,'Wavelength for each PMT in nanometer')...
+            most.HasMachineDataFile.makeEntry('comPort','','Serial port the SiPM is connected to (e.g. ''COM3'')')...
         ];
 end
 

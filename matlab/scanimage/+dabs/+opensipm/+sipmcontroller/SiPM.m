@@ -1,30 +1,27 @@
-classdef PMT < dabs.resources.devices.PMT
+classdef SiPM < dabs.resources.devices.SiPM
 
 %% FRIEND PROPS
     properties (SetAccess=protected, AbortSet, SetObservable)
-        powerOn = false;    % [logical]   scalar containing power status for PMT
-        gain_V = 0;         % [numerical] scalar containing gain setting for PMT
-        gainOffset_V = 0;   % [numeric]   scalar containing offset for PMT
-        bandwidth_Hz = 0;   % [numeric]   scalar containing amplifier bandwidth for PMT
-        tripped = false;    % [logical] scalar containing trip status for Pmt
+        powerOn = false;    % [logical]   scalar containing power status for SiPM
+        gain_V = 0;         % [numerical] scalar containing gain setting for SiPM
+        gainOffset_V = 0;   % [numeric]   scalar containing offset for SiPM
     end
     
     properties (SetAccess = protected, Hidden)
-        lastQuery = 0;   % time of last pmt status query (tic)
+        lastQuery = 0;   % time of last sipm status query (tic)
     end
     
     properties (SetAccess = immutable)
-        hPMTController
-        pmtNum
-        pmtLetter
+        hSiPMController
+        sipmNum
     end
     
-    methods (Access = ?dabs.opensipm.PMTController)
-        function obj = PMT(hPMTController,pmtNum)
-            name = sprintf('%s SiPM',hPMTController.name);
-            obj@dabs.resources.devices.PMT(name);
-            obj.hPMTController = hPMTController;
-            obj.pmtNum = pmtNum;
+    methods (Access = ?dabs.opensipm.SiPMController)
+        function obj = SiPM(hSiPMController,sipmNum)
+            name = sprintf('%s SiPM',hSiPMController.name);
+            obj@dabs.resources.devices.SiPM(name);
+            obj.hSiPMController = hSiPMController;
+            obj.sipmNum = sipmNum;
             obj.deinit();
         end
     end
@@ -43,14 +40,14 @@ classdef PMT < dabs.resources.devices.PMT
         function reinit(obj)
             obj.deinit();
             
-            if ~most.idioms.isValidObj(obj.hPMTController)
+            if ~most.idioms.isValidObj(obj.hSiPMController)
                 return
             end
             
-            if isempty(obj.hPMTController.errorMsg)
+            if isempty(obj.hSiPMController.errorMsg)
                 obj.errorMsg = '';
             else
-                obj.errorMsg = 'PMT Controller is in error state: %s';
+                obj.errorMsg = 'SiPM Controller is in error state: %s';
             end
         end
     end
@@ -58,33 +55,20 @@ classdef PMT < dabs.resources.devices.PMT
     methods
         function setPower(obj,tf)
             if tf
-                obj.hPMTController.writeCommand('on', []);
+                obj.hSiPMController.writeCommand('on', []);
             else
-                obj.hPMTController.writeCommand('off', []);
-            end
-            
-            if obj.hPMTController.mode ~= 3
-                obj.hPMTController.setMode(3);
+                obj.hSiPMController.writeCommand('off', []);
             end
         end
         
         function setGain(obj,gain_V)
             cmd = sprintf('voltage %f', gain_V*1000);     % SiPM Bias Voltage in mV
-            obj.hPMTController.writeCommand(cmd, []);
+            obj.hSiPMController.writeCommand(cmd, []);
         end
         
         function setGainOffset(obj,offset_V)
             cmd = sprintf('offset_voltage %f', offset_V*1000);  % SiPM Offset Voltage in mV
-            obj.hPMTController.writeCommand(cmd, []);
-        end
-        
-        function setBandwidth(obj,bandwidth_Hz)
-            % not supported
-        end
-        
-        function resetTrip(obj)
-            % not supported (nor needed ;))
-%             obj.hPMTController.writeCommand('RESTART', []);
+            obj.hSiPMController.writeCommand(cmd, []);
         end
     end
     
@@ -97,18 +81,18 @@ classdef PMT < dabs.resources.devices.PMT
      
     methods
         function queryStatus(obj)
-            if ~most.idioms.isValidObj(obj.hPMTController)...
-              || ~isempty(obj.hPMTController.errorMsg)...
+            if ~most.idioms.isValidObj(obj.hSiPMController)...
+              || ~isempty(obj.hSiPMController.errorMsg)...
               || ~isempty(obj.errorMsg)
                 return
             end
             
-            if obj.pmtNum > 1
+            if obj.sipmNum > 1
                 return
             end
             
             try
-                obj.hPMTController.queryStatus();
+                obj.hSiPMController.queryStatus();
             catch ME
                 most.ErrorHandler.logAndReportError(ME);
             end
