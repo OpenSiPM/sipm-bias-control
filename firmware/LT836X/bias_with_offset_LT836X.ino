@@ -315,7 +315,7 @@ void parse_command(char *str)
     sprintf(msgbuf, "%d\n", millivoltFromOffset(offset));
     Serial.write(msgbuf);
   }
-  else if (strcmp(tok, "volts?") == 0 || strcmp(tok, "gain_voltage?") == 0)
+  else if (strcmp(tok, "volts?") == 0 || strcmp(tok, "gain_voltage?") == 0 || strcmp(tok, "voltage?") == 0)
   {
     sprintf(msgbuf, "%d\n", millivoltFromGain(gain));
     Serial.write(msgbuf);
@@ -384,11 +384,11 @@ void parse_command(char *str)
     sprintf(msgbuf, "Calibrated 42V to %d, 50V to %d\n", g42, g50);
     Serial.write(msgbuf);
   }
-  else if (strcmp(tok, "write_rom") == 0)
+  else if (strcmp(tok, "write_rom") == 0 || strcmp(tok,"write_offset") == 0)
   {
     writeEEPROM();
   }
-  else if (strcmp(tok, "read_rom") == 0)
+  else if (strcmp(tok, "read_rom") == 0 || strcmp(tok,"read_offset") == 0)
   {
     readEEPROM();
   }
