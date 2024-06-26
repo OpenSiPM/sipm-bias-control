@@ -6,11 +6,11 @@
 
 #if TARGET_SAMD21
 // Proper at91samd21 build
-#define DEVICE_NAME "SiPM 1.3 (at91samd21)"
+#define DEVICE_NAME "SiPM 1.31 (at91samd21)"
 #include <FlashAsEEPROM.h> // See lib FlashStorage for samd21/samd51 only
 #else
 // Generic Arduino build
-#define DEVICE_NAME "SiPM 1.3 (arduino)"
+#define DEVICE_NAME "SiPM 1.31 (arduino)"
 #include <EEPROM.h> // Built-in lib
 #endif
 
