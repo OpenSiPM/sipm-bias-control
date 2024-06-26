@@ -24,6 +24,7 @@ char NAME[] = DEVICE_NAME;
 // 'factory' startup defaults // Based on our measurements of board
 uint16_t gain = 3500, g42 = 3215, g50 = 3870; // Starting Gain Value, Gain Required for 42V, Gain Required for 50V
 uint16_t offset = 220;
+uint16_t lt8362_voltage = 170;  //default voltage for the boost converter, 170 = 52.8V
 bool on = LOW;
 int eeAddress = 0;
 String cmd;
@@ -186,6 +187,9 @@ void parse_command(char *str)
 
   if (strcmp(tok, "on") == 0)
   {
+    //configure the LT836x output voltage using the arduino DAC
+    analogWrite(A0, lt8362_voltage);
+    
     on = true;
     Serial.println("on"); // Always reply something
   }
