@@ -74,17 +74,13 @@ void setup()
 
 
 // Sets the output voltage using the input volt value and offset given
-void setVoltageAndOffset(uint16_t volt, uint16_t offset)
+void setVoltageAndOffset(uint16_t gain, uint16_t offset)
 {
   //Vout = 1.25+ (1.25/(48E3)+(1.25-V)/48E3)*1E6;
-  mcp.analogWrite(4095 - volt, offset);
-
-
-  //TODO:  set this sensibly
-  //analogWrite(A0, lt8362_voltage);
+  mcp.analogWrite(4095 - gain, offset);
 
   Serial.print("Analog Write:");
-  Serial.print(volt);
+  Serial.print(gain);
   Serial.print(" / ");
   Serial.println(offset);
 }
