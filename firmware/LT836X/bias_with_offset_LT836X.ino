@@ -170,11 +170,14 @@ void usage()
   Serial.println("help[?]                 Return this message");
   Serial.println("name?                   Return device/firmware info");
   Serial.println("on[?]|off[?]            Set booster ON/OFF or query status");
-  Serial.println("gain[?] level           Set gain level (0-4000) or query");
-  Serial.println("offset[?] level         Set offset level (0-2048) or query");
+  Serial.println("gain[?] level           Set gain level (0-4095) or query");
+  Serial.println("offset[?] level         Set offset level (0-2047) or query");
   Serial.println("calibration[?] g42 g50  Set gain calibration levels at 42V and at 50V or query");
-  Serial.println("[gain_]voltage[?] V    Set gain (bias) voltage [0 ~55] V or query, requires calibration");
-  Serial.println("offset_voltage[?] mv    Set offset millivolt [0 2048] or query");
+  Serial.println("voltage[?] V            Set gain (bias) voltage [5 52.3] V or query, requires calibration, voltage must be < lt836x_voltage - 250mV");
+  Serial.println("millivolts[?] mV        Set gain (bias) voltage in units of millivolts");
+  Serial.println("gain[?] DN              Set gain (bias) DNs [0 4095] or query");
+  Serial.println("offset_voltage[?] DN    Set offset DNs [0 2047] or query");
+  Serial.println("lt836x_voltage[?] DN    Set boost converter voltage DN [0 1023] mapping to [54.7V 41V], default 52.8V or query");
   Serial.println("read_rom                Recall defaults and calibration from ROM (startup values)");
   Serial.println("write_rom               Set gain and offset defaults, and calibration into ROM");
 }
