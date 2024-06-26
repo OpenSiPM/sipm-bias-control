@@ -92,7 +92,7 @@ void setVoltageAndOffset(uint16_t volt, uint16_t offset)
 
 
 // Takes the input gain and will output a millivoltage it expects from that gain setting
-uint16_t millivoltFromGain(uint16_t gain)
+uint32_t millivoltFromGain(uint16_t gain)
 {
   // linear interpolation using 42000mV and 50000mV
   return (((long)gain - g42) * (8000L) + 42000L * ((long)g50 - g42)) / (g50 - g42);
@@ -104,13 +104,13 @@ uint16_t gainFromVoltage(uint16_t millivolt)
   return (((long)g50 - g42) * ((long)millivolt - 42000L) + g42 * 8000L) / (8000L);
 }
 
-uint16_t millivoltFromOffset(uint16_t o)
+uint32_t millivoltFromOffset(uint16_t o)
 {
   // mcp level 2048 = 2048 mV, and actual opamp offset is 1/2
   return o / 2;
 }
 
-uint16_t offsetFromVoltage(uint16_t millivolt)
+uint16_t offsetFromVoltage(uint32_t millivolt)
 {
   // mcp level 2048 = 2048 mV, and actual opamp offset is 1/2
   return millivolt * 2;
@@ -315,40 +315,29 @@ void parse_command(char *str)
     Serial.write(msgbuf);
   }
   // Change gain voltage input of milliVolts
-  else if (strcmp(tok, "millivolts") == 0 || strcmp(tok, "gain_millivolts") == 0)
-  {
+  else if (strcmp(tok, "millivolts") == 0 || strcmp(tok, "gain_millivolts") == 0 || strcmp(tok, "voltage") == 0 || strcmp(tok, "volts") == 0 || strcmp(tok, "gain_voltage") == 0)
+  { 
+    long scaler = 1;
+    //check units of command and convert to millivolts if needed
+    if (strcmp(tok, "voltage") == 0 || strcmp(tok, "gain_voltage") == 0 || strcmp(tok, "volts") == 0)
+    {
+      sprintf(msgbuf, "In If because %s\n",tok);
+      Serial.write(msgbuf);      
+      scaler = 1000;
+    }
+    
     tok = strtok(NULL, " \n");
+
     long volts = strtol(tok, NULL, 10);
-    uint16_t vmin = millivoltFromGain(g42);    // minimum millivolt depends on calibration
-    uint16_t vmax = millivoltFromGain(4000); // maximum millivolt depeneds on calibration
+    volts = volts * scaler;
+
+
+    uint32_t vmin = millivoltFromGain(0);    // minimum millivolt depends on calibration
+    uint32_t vmax = millivoltFromGain(4095); // maximum millivolt depeneds on calibration
     uint16_t g = gainFromVoltage(volts); // Has input of millivolts
     if (volts > vmax || volts < vmin)
     {
-      sprintf(msgbuf, "voltage invalid (out of range [%d %d] mV\n", vmin, vmax);
-      Serial.write(msgbuf);
-    }
-    else
-    {
-      gain = g; // valid range accepted
-      setVoltageAndOffset(gain, offset);
-
-    }
-    // Always reply something:
-    sprintf(msgbuf, "%d\n", millivoltFromGain(gain));
-    Serial.write(msgbuf);
-  }
-  // Change gain voltage input of Volts
-  else if (strcmp(tok, "voltage") == 0 || strcmp(tok, "gain_voltage") == 0)
-  {
-    tok = strtok(NULL, " \n");
-    float inputVolt = strtol(tok, NULL, 10);
-    long millivolts = inputVolt*1000; 
-    float vmin = ((float) millivoltFromGain(g42))/1000;    // minimum millivolt depends on calibration
-    float vmax = ((float) millivoltFromGain(4000))/1000; // maximum millivolt depeneds on calibration
-    uint16_t g = gainFromVoltage(millivolts); // Has input of millivolts
-    if (millivolts > vmax || millivolts < vmin)
-    {
-      sprintf(msgbuf, "voltage invalid (out of range [%d %d] V\n", vmin, vmax);
+      sprintf(msgbuf, "voltage invalid (%d out of range [%d %d] mV\n",volts, vmin, vmax);
       Serial.write(msgbuf);
     }
     else
