@@ -229,6 +229,7 @@ void parse_command(char *str)
     sprintf(msgbuf, "%d\n", offset);
     Serial.write(msgbuf);
   }
+  //set TIA offset voltage in DAC units
   else if (strcmp(tok, "offset") == 0)
   {
     tok = strtok(NULL, " \n");
@@ -244,6 +245,7 @@ void parse_command(char *str)
     sprintf(msgbuf, "%d\n", offset);
     Serial.write(msgbuf);
   }
+  //testing only
   else if (strcmp(tok, "gpioh") == 0)
   {
     tok = strtok(NULL, " \n");
