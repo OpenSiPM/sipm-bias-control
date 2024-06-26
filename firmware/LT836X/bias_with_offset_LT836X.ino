@@ -207,12 +207,13 @@ void parse_command(char *str)
     sprintf(msgbuf, "%d\n", gain);
     Serial.write(msgbuf);
   }
+  //set bias voltage in DAC units
   else if (strcmp(tok, "gain") == 0)
   {
     tok = strtok(NULL, " \n");
     long g = strtol(tok, NULL, 10);
     if (g > 4096 || g < 0)
-      Serial.println("gain invalid (out of range [0 2000])");
+      Serial.println("gain invalid (out of range [0 4095])");
     else
     {
       gain = (uint16_t)g; // valid range accepted
