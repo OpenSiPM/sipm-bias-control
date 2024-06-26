@@ -400,7 +400,7 @@ void parse_command(char *str)
   {
     Serial.println(NAME);
   }
-  else if (strlen(tok) > 2)
+  else if (strlen(tok) > 1)
   {
     sprintf(msgbuf, "Unknown command: '%s' (type help for a list of commands)\n", tok);
     Serial.write(msgbuf);
