@@ -272,8 +272,8 @@ void parse_command(char *str)
     sprintf(msgbuf, "set %d low\n", o);
     Serial.write(msgbuf);
   }
-
-  else if (strcmp(tok, "dac") == 0)
+  //set the voltage of the LT836X boost converter, smaller values give higher voltage, always set >250mV higher than output voltage
+  else if (strcmp(tok, "dac") == 0 || strcmp(tok, "lt8362x_voltage") == 0)
   {
     tok = strtok(NULL, " \n");
     long o = strtol(tok, NULL, 10);
@@ -281,6 +281,7 @@ void parse_command(char *str)
       Serial.println("offset invalid (out of range [0 1023])");
     else
     {
+      lt8362_voltage = o;
       //must write to A alias of the pin or its interpreted as digital
       analogWrite(A0, o);
     }
@@ -288,7 +289,11 @@ void parse_command(char *str)
     sprintf(msgbuf, "set dac A0 to %d\n", o);
     Serial.write(msgbuf);
   }
-
+  else if (strcmp(tok, "dac?") == 0 || strcmp(tok, "lt8362x_voltage?") == 0)
+  {
+    sprintf(msgbuf, "Arduino DAC setting LT836x to %d DNs\n", lt8362_voltage);
+    Serial.write(msgbuf);
+  }
   else if (strcmp(tok, "offset_voltage?") == 0)
   {
     sprintf(msgbuf, "%d\n", millivoltFromOffset(offset));
