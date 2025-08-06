@@ -1,0 +1,16 @@
+(module "S14420" (layer F.Cu) (tedit 5DBC8D70)
+  (fp_text reference "D1" (at 0.1 1) (layer F.SilkS) hide
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (fp_text value "SIPM" (at 0.1 -0.5) (layer F.Fab) hide
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (fp_circle (center 0 0) (end 4.55 0) (layer F.SilkS) (width 0.12))
+  (fp_line (start 3.75 2.65) (end 4.55 3.35) (layer F.SilkS) (width 0.12))
+  (fp_line (start 4.55 3.35) (end 3.95 4.05) (layer F.SilkS) (width 0.12))
+  (fp_line (start 3.95 4.05) (end 3.85 4.15) (layer F.SilkS) (width 0.12))
+  (fp_line (start 3.85 4.15) (end 3.05 3.45) (layer F.SilkS) (width 0.12))
+  (pad "1" thru_hole circle (at 2.54 0) (size 1.2 1.2) (drill 0.6) (layers *.Cu *.Mask))
+  (pad "2" thru_hole circle (at -2.54 0) (size 1.2 1.2) (drill 0.6) (layers *.Cu *.Mask))
+  (pad "3" thru_hole circle (at 0 2.54) (size 1.2 1.2) (drill 0.6) (layers *.Cu *.Mask))
+)
