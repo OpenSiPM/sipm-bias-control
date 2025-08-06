@@ -1,0 +1,11 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Connector_Generic")(type "Legacy")(uri "${KIPRJMOD}/schlib/Connector_Generic.lib")(options "")(descr ""))
+  (lib (name "Device")(type "Legacy")(uri "${KIPRJMOD}/schlib/Device.lib")(options "")(descr ""))
+  (lib (name "OPA843")(type "Legacy")(uri "${KIPRJMOD}/schlib/OPA843.lib")(options "")(descr ""))
+  (lib (name "OPA847")(type "Legacy")(uri "${KIPRJMOD}/schlib/OPA847.lib")(options "")(descr ""))
+  (lib (name "power")(type "Legacy")(uri "${KIPRJMOD}/schlib/power.lib")(options "")(descr ""))
+  (lib (name "73415-2061")(type "Legacy")(uri "${KIPRJMOD}/schlib/73415-2061.lib")(options "")(descr ""))
+  (lib (name "tiav2-rescue")(type "Legacy")(uri "${KIPRJMOD}/tiav3_s13360_3030VE-rescue.lib")(options "")(descr ""))
+  (lib (name "s13360_3030VE")(type "KiCad")(uri "${KIPRJMOD}/s13360_3030VE.kicad_sym")(options "")(descr ""))
+)
