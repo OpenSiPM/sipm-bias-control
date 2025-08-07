@@ -3524,7 +3524,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "footprints:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 187.96 87.63 0)
 			(effects
 				(font
@@ -4141,7 +4141,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1u"
+		(property "Value" "22u"
 			(at 172.085 121.285 0)
 			(effects
 				(font
@@ -4150,7 +4150,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 171.45 119.38 0)
 			(effects
 				(font
@@ -4227,7 +4227,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "footprints:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 158.75 119.38 0)
 			(effects
 				(font
@@ -4360,7 +4360,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "footprints:L_0603_1608Metric"
+		(property "Footprint" "Inductor_SMD:L_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
 			(at 104.14 120.65 0)
 			(effects
 				(font
@@ -4428,7 +4428,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "footprints:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 116.84 107.95 0)
 			(effects
 				(font
@@ -4496,7 +4496,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "footprints:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 104.14 113.03 0)
 			(effects
 				(font
@@ -4759,7 +4759,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "footprints:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 214.63 110.49 0)
 			(effects
 				(font
@@ -4827,7 +4827,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "footprints:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 142.24 114.3 0)
 			(effects
 				(font
@@ -4904,7 +4904,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" " ~"
+		(property "Datasheet" "~"
 			(at 264.16 110.49 0)
 			(effects
 				(font
@@ -5104,7 +5104,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
+		(property "Footprint" "Inductor_SMD:L_0603_1608Metric"
 			(at 232.41 110.49 0)
 			(effects
 				(font

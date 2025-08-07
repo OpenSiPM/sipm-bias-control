@@ -5189,7 +5189,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
+		(property "Footprint" "Inductor_SMD:L_0603_1608Metric"
 			(at 232.41 110.49 0)
 			(effects
 				(font
@@ -5810,7 +5810,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "s13360_3030VE"
+		(property "Value" "s13360_3050VE"
 			(at 106.68 97.79 90)
 			(effects
 				(font
