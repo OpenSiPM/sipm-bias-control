@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name "assembly")(type "KiCad")(uri "${KIPRJMOD}/assembly.pretty")(options "")(descr ""))
-)
