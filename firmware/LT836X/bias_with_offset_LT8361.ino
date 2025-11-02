@@ -6,11 +6,11 @@
 
 #if TARGET_SAMD21
 // Proper at91samd21 build
-#define DEVICE_NAME "SiPM 1.31 (at91samd21)"
+#define DEVICE_NAME "SiPM 1.32 (at91samd21)"
 #include <FlashAsEEPROM.h> // See lib FlashStorage for samd21/samd51 only
 #else
 // Generic Arduino build
-#define DEVICE_NAME "SiPM 1.31 (arduino)"
+#define DEVICE_NAME "SiPM 1.32 (arduino)"
 #include <EEPROM.h> // Built-in lib
 #endif
 
@@ -18,13 +18,12 @@ char NAME[] = DEVICE_NAME;
 
 // DC/DC Booster ON/OFF gpio pin
 #define BOOST_PIN 13
-//#define HVLDO_PIN 12    //if LDO
 #define HVLDO_PIN 7       //if LDO-LT836X
 
 // 'factory' startup defaults // Based on our measurements of board
-uint16_t gain = 3500, g42 = 3215, g50 = 3870; // Starting Gain Value, Gain Required for 42V, Gain Required for 50V
+uint16_t gain = 3500, g42 = 2538, g50 = 3063; // Starting Gain Value, Gain Required for 42V, Gain Required for 50V
 uint16_t offset = 220;
-uint16_t lt8361_voltage = 170;  //default voltage for the boost converter, 170 = 52.8V
+uint16_t lt8361_voltage = 418;  //default voltage for the boost converter, 418 = 60V, 81 = 64V
 bool on = LOW;
 int eeAddress = 0;
 String cmd;
@@ -117,8 +116,11 @@ uint16_t offsetFromVoltage(uint32_t millivolt)
 uint32_t lt8361_voltage_millivolts(uint32_t dn)
 {
   //do calculation in uV to avoid floating point
-  //return (1.6E6  + (1.6E6/39.0E3 + (1.6E6 - dn*1E6/1024*1.0) / 69.8E3))/1E6;  //from ohm's law
-  return (1600000  + (1600000/39000 + (1600000 - dn*1000000/1024) / 69800)*1000000)/1000;
+  //return (1.6E6  + (1.6E6/39.0E3 + (1.6E6 - dn*1E6/1024*3.3) / 69.8E3))/1E6;  //from ohm's law
+  //return (1.6E6  + ((1.6E6/39.0E3 + 1.6E6/ 69.8E3) - dn*1E6/1024*3.3/69.8E3))/1E6;  //from ohm's law
+
+  //return (1600000  + (1600000/39000 + (1600000 - dn*3300000/1024) / 69800)*1000000)/1000;
+  return (1600000  + ((1600000/39000 + 1600000/69800) - dn*3300000/1024/ 69800 )*1000000)/1000;
 }
 
 //calculate the actual output voltage (in mv) for the LT8361 using the default feedback network
@@ -126,7 +128,7 @@ uint32_t lt8361_dn_from_millivolts(uint32_t mv)
 {
   //do calculation in uV to avoid floating point
   //dn = (mv - 65548)/(-46.1698); //inverse fit to the above function
-  dn = (mv*1000-65548000)/-46170;
+  uint32_t dn = (mv*1000-65548000)/-46170;
   return dn;
   
 }
@@ -162,13 +164,13 @@ void readEEPROM()
     Serial.print(msgbuf);
     return;
   }
-  if (rg42 > 2000 || rg42 < 20)
+  if (rg42 > 4000 || rg42 < 20)
   {
     sprintf(msgbuf, "eeprom invalid (g42 value out of range: '%d')\n", rg42);
     Serial.print(msgbuf);
     return;
   }
-  if (rg50 > 2000 || rg50 < 20)
+  if (rg50 > 4000 || rg50 < 20)
   {
     sprintf(msgbuf, "eeprom invalid (g50 value out of range: '%d')\n", rg50);
     Serial.print(msgbuf);
@@ -195,7 +197,8 @@ void usage()
   Serial.println("millivolts[?] mV        Set gain (bias) voltage in units of millivolts");
   Serial.println("gain[?] DN              Set gain (bias) DNs [0 4095] or query");
   Serial.println("offset_voltage[?] DN    Set offset DNs [0 2047] or query");
-  Serial.println("lt8361_voltage[?] DN    Set boost converter voltage DN [0 1023] mapping to [65.5V 18V], default 52.8V or query");
+  Serial.println("lt8361_voltage[?] DN    Set boost converter voltage DN [0 1023] mapping to [65.5V 18V], default 60V on LT8361");
+  Serial.println("                        Note:  boost converter voltage should be at least 1V greater than bias voltage");
   Serial.println("read_rom                Recall defaults and calibration from ROM (startup values)");
   Serial.println("write_rom               Set gain and offset defaults, and calibration into ROM");
 }
@@ -209,7 +212,7 @@ void parse_command(char *str)
   if (strcmp(tok, "on") == 0)
   {
     //configure the LT836x output voltage using the arduino DAC
-    analogWrite(A0, lt8362_voltage);
+    analogWrite(A0, lt8361_voltage);
     
     on = true;
     Serial.println("on"); // Always reply something
@@ -242,7 +245,7 @@ void parse_command(char *str)
     }
 
     // Always reply something:
-    sprintf(msgbuf, "%d\n", gain);
+    sprintf(msgbuf, "%d dn and voltage %u\n", gain, lt8361_voltage_millivolts(gain));
     Serial.write(msgbuf);
   }
   else if (strcmp(tok, "offset?") == 0)
@@ -296,7 +299,7 @@ void parse_command(char *str)
     Serial.write(msgbuf);
   }
   //set the voltage of the LT836X boost converter, smaller values give higher voltage, always set >250mV higher than output voltage
-  else if (strcmp(tok, "dac") == 0 || strcmp(tok, "lt8362x") || strcmp(tok, "lt8361") == 0)
+  else if (strcmp(tok, "dac") == 0 || strcmp(tok, "lt8362x") == 0 || strcmp(tok, "lt8361") == 0)
   {
     tok = strtok(NULL, " \n");
     long o = strtol(tok, NULL, 10);
@@ -304,7 +307,7 @@ void parse_command(char *str)
       Serial.println("offset invalid (out of range [0 1023])");
     else
     {
-      lt8362_voltage = o;
+      lt8361_voltage = o;
       //must write to A alias of the pin or its interpreted as digital
       analogWrite(A0, o);
     }
@@ -312,7 +315,7 @@ void parse_command(char *str)
     sprintf(msgbuf, "set dac A0 to %d dn (%d millivolts)\n", o, lt8361_voltage_millivolts(o));
     Serial.write(msgbuf);
   }
-  else if (strcmp(tok, "dac") == 0 || strcmp(tok, "lt8362x_voltage") || strcmp(tok, "lt8361_voltage") == 0)
+  else if (strcmp(tok, "lt8362x_voltage") == 0 || strcmp(tok, "lt8361_voltage") == 0 || strcmp(tok, "lt8362_voltage") == 0)
   {
     tok = strtok(NULL, " \n");
     long o = strtol(tok, NULL, 10);
@@ -320,18 +323,18 @@ void parse_command(char *str)
       Serial.println("offset invalid (out of range [6 65])");
     else
     {
-      lt8362_voltage =  lt8361_dn_from_millivolts(o);
+      lt8361_voltage =  lt8361_dn_from_millivolts(o);
       //must write to A alias of the pin or its interpreted as digital
-      //analogWrite(A0, lt8362_voltage);
+      //analogWrite(A0, lt8361_voltage);
     }
     // Always reply something:
-    sprintf(msgbuf, "set dac A0 to %d dn (%d millivolts)\n", o, lt8362_voltage);
+    sprintf(msgbuf, "set dac A0 to %d dn (%d millivolts)\n", o, lt8361_voltage);
     Serial.write(msgbuf);
   }
   
   else if (strcmp(tok, "dac?") == 0 || strcmp(tok, "lt8362x_voltage?") == 0)
   {
-    sprintf(msgbuf, "Arduino DAC setting LT836x to %d DNs\n", lt8362_voltage);
+    sprintf(msgbuf, "Arduino DAC setting LT836x to %d DNs\n", lt8361_voltage);
     Serial.write(msgbuf);
   }
   else if (strcmp(tok, "offset_voltage?") == 0)
@@ -403,24 +406,76 @@ void parse_command(char *str)
   }
   else if (strcmp(tok, "calibration") == 0)
   {
-    // calibration gain@42v gain@50v
-    tok = strtok(NULL, " \n");
-    long tg42 = strtol(tok, NULL, 10);
-    tok = strtok(NULL, " \n");
-    long tg50 = strtol(tok, NULL, 10);
-    if (tg42 > 4000 || tg42 <= 0)
+    long tg42, tg50;
+    if(1)
     {
-      Serial.println("calibration invalid (g42 out of range [0-4000])");
-      return;
+      //calibration where it sets a gain and asks for a voltage
+
+      setVoltageAndOffset(g42, offset);
+      
+      Serial.print("Set gain to ");
+      Serial.print(g42);
+      Serial.println(" DN, please enter the actual voltage in volts:"); 
+      
+
+      while(Serial.available()==0){}
+      
+      cmd = Serial.readStringUntil('\n');
+      char *str = (char *)cmd.c_str();
+      float f1 = strtof (str, NULL);
+
+      Serial.println("Read: ");
+      Serial.println(f1);
+
+      //measure larger voltage
+      setVoltageAndOffset(g50, offset);
+      Serial.print("Set gain to ");
+      Serial.print(g50);
+      Serial.println(" DN, please enter the actual voltage in volts:"); 
+
+      while(Serial.available()==0){}
+
+      cmd = Serial.readStringUntil('\n');
+      str = (char *)cmd.c_str();
+      float f2 = strtof (str, NULL);
+
+      float m = (f2-f1)/(g50-g42);
+      float b = f1 - g42*m;
+
+
+      Serial.print("Calculated m/b ");
+      Serial.println(m, 5);
+      Serial.println(b, 5);
+
+      //TODO:  get rid of this legacy format and store just the equation of the line
+      g42 = (42.0f-b)/m;
+      g50 = (50.0f-b)/m;
+
+      
     }
-    if (tg50 > 4000 || tg50 <= 0)
+    else
     {
-      Serial.println("calibration invalid (g50 out of range [0-4000])");
-      return;
+      // calibration gain@42v gain@50v
+      tok = strtok(NULL, " \n");
+      tg42 = strtol(tok, NULL, 10);
+      tok = strtok(NULL, " \n");
+      tg50 = strtol(tok, NULL, 10);
+      if (tg42 > 4000 || tg42 <= 0)
+      {
+        Serial.println("calibration invalid (g42 out of range [0-4000])");
+        return;
+      }
+      if (tg50 > 4000 || tg50 <= 0)
+      {
+        Serial.println("calibration invalid (g50 out of range [0-4000])");
+        return;
+      }
+      // accept valid calibration coefficients
+      g42 = tg42;
+      g50 = tg50;
     }
-    // accept valid calibration coefficients
-    g42 = tg42;
-    g50 = tg50;
+    
+    
     sprintf(msgbuf, "Calibrated 42V to %d, 50V to %d\n", g42, g50);
     Serial.write(msgbuf);
   }
@@ -464,7 +519,7 @@ void loop()
     else
       Serial.println("Found MCP4728 chip");
     // apply settings from ROM
-    //readEEPROM();
+    readEEPROM();
     setVoltageAndOffset(gain, offset);
 
   }
