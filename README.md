@@ -20,7 +20,7 @@ This PCB is responsible for generating the high voltage (~50-60V) required to op
 
 See:  [bias-control-lt8362](https://github.com/OpenSiPM/sipm-bias-control/tree/master/bias-control-lt8362). [Bill of materials](https://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/bias-control-lt8362/bom/ibom.html)
 
-![Image of bias generator](https://github.com/OpenSiPM/sipm-bias-control/blob/master/sipm-bias-control/bias_generator_LT8362.jpg)
+![Image of bias generator](https://github.com/OpenSiPM/sipm-bias-control/blob/master/bias-control-lt8362/bias_generator_LT8362.jpg)
 
 # power-supply
 
