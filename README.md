@@ -6,9 +6,7 @@ The OpenSiPM project aims to design high performance, low cost detectors for flu
 
 The sipm-bias-control repository contains the KiCAD design files for a high dynamic range silicon photomultiplier (SiPM) transimpedance amplifier, power suppply, and bias generator designed by Eben Olson and Michael Giacomelli.  The repository is organized into separate folders for each component, with bias-control-lt8362 containing the design files for the high voltage bias generator, power-supply/power-supply-alt containing two equivilent opamp power supply boards, and the tiav3_s1XXXX folders containing high dynamic range transimpedance amplifiers using current domain pole zero cancellation for several models of Hamamatsu SiPM.  The bias generator, power supply and a transimpedance amplifier PCB stack together to build a single detector that can be mounted in a conventional SM1 lens tube.  In addition, the firmware folder contains the firmware required to run the bias-control microcontroller. 
 
-Compared to conventional PMT detectors used in many laser scanning fluorescense microscopes, SiPMs have some advantages, including low cost, high durability, higher QE at long wavelengths, and extremely high dynamic range.  The amplifier design presented here is specifically optimized for maximizing dynamic range with a saturation power in excess of 40-100 billion photons per second (depending on model), enabling high imaging rates. The disadvantage of the SiPM detectors is relatively high dark current, which makes them less suitable for low speed scanning systems.  However, at high pixel rates, they obtain superior sensitivity to PMTs.  
-
-All design files are in KiCAD.
+Compared to conventional PMT detectors used in many laser scanning fluorescense microscopes, SiPMs have some advantages, including low cost, high durability, higher QE at long wavelengths, and extremely high dynamic range.  The amplifier design presented here is specifically optimized for maximizing dynamic range with a saturation power in excess of 40-100 billion photons per second (depending on model), enabling high imaging rates without saturation. The disadvantage of the SiPM detectors is relatively high dark current, which makes them less suitable for low speed scanning systems.  However, at high pixel rates, they obtain superior sensitivity to PMTs.  
 
 # performance
 
@@ -18,7 +16,7 @@ The performance of this detector design is evaluated in the manuscript "Ultrahig
 
 # bias-control-lt8362
 
-This PCB is responsible for generating the high voltage (~50V) required to operate a SiPM, receiving USB commands using a SAMD21 microcontroller, and distributing +5v power from USB to the other boards which stack onto it. There are additionally a programming header used to initially flash the Arduino bootloader.  Note that the current version uses USB Micro instead of USB-C, this is because it has been difficult to source a consistently in stock USB-C throughhole connector so I did not upload the USB-C version until availability improves.  
+This PCB is responsible for generating the high voltage (~50-60V) required to operate a SiPM, receiving USB commands using a SAMD21 microcontroller, and distributing +5v power from USB to the other boards which stack onto it. There are additionally a programming header used to initially flash the Arduino bootloader.  
 
 See:  [bias-control-lt8362](https://github.com/OpenSiPM/sipm-bias-control/tree/master/bias-control-lt8362). [Bill of materials](https://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/bias-control-lt8362/bom/ibom.html)
 
@@ -26,15 +24,15 @@ See:  [bias-control-lt8362](https://github.com/OpenSiPM/sipm-bias-control/tree/m
 
 # power-supply
 
-This PCB takes the +5v from USB and converts to low noise +3.3 and -4.5v used by the opamps.  The asymetric voltages are because the negative rail has a much larger impact on dynamic range, making optimization of the negative voltages a lot more important. A list of components required can be viewed online in the interactive [power-supply bill of materials](http://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/power-supply/kicad/bom/ibom.html)
+This PCB takes the +5v from USB and converts to low noise +3.3v and -4.5v used by the opamps.  The asymetric voltages are because the negative rail has a much larger impact on dynamic range, making optimization of the negative voltages a lot more important. A list of components required can be viewed online in the interactive [power-supply bill of materials](http://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/power-supply/kicad/bom/ibom.html)
 
 ![Image of power supply board](https://github.com/OpenSiPM/sipm-bias-control/blob/master/power-supply/psu.jpg)
 
-Due to the ongoing global semiconductor shortage making regulator ICs hard to get, there is also an alternative power supply design which uses easier to obtain ICs.  These are slightly more expensive and (on paper) slightly better.  In practice there should be little difference in performance and no reason to prefer one design over the other aside from component availability.  
+Due to the global semiconductor shortage making regulator ICs hard to get, there is also an alternative power supply design which uses easier to obtain ICs.  These are slightly more expensive and (on paper) slightly better.  In practice there should be little difference in performance and no reason to prefer one design over the other aside from component availability.  
 
 # tiav3
 
-This PCB receives bias and supply voltages from the other boards and emits amplified RF out over an SMB connector.  A SiPM is mounted in the center of the PCB, which will mount in an [SM1 lens tube](https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=3307) to simplify alignment with an existing microscope.  The transimpedance amplifier implements current domain pole zero cancellation (PZC) (see: [Pole Zero Cancellation](https://github.com/OpenSiPM/sipm-bias-control/wiki/Pole-Zero-Cancellation)), where an inductive current divider is used to separate the slow SiPM recharge current from the fast capacitive spike generated by a single photon detection.  Following the divider, a transimpedance amplifier converts to voltage and then drives the 50 ohm SMA or SMB connector. An additional offset correction function is provided using the microcontroller on the bias-control board, enabling either zeroing the amplifier zero point, or shifting the zero point to positive voltages to extend dynamic range.    
+This PCB receives bias and supply voltages from the other boards and emits amplified RF out over an SMA or SMB connector.  A SiPM is mounted in the center of the PCB, which will mount in an [SM1 lens tube](https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=3307) to simplify alignment with an existing microscope.  The transimpedance amplifier implements current domain pole zero cancellation (PZC) (see: [Pole Zero Cancellation](https://github.com/OpenSiPM/sipm-bias-control/wiki/Pole-Zero-Cancellation)), where an inductive current divider is used to separate the slow SiPM recharge current from the fast capacitive spike generated by a single photon detection.  Following the divider, a transimpedance amplifier converts to voltage and then drives the 50 ohm SMA or SMB connector. An additional offset correction function is provided using the microcontroller on the bias-control board, enabling either zeroing the amplifier zero point, or shifting the zero point to positive voltages to extend dynamic range.    
 
 The use of current domain PZC has several advantages over conventional methods.  First, since the slow component of the SiPM response is canceled prior to amplification, the dynamic range is extended by the same factor as the PZC attenuates, in this case, 10-fold.  Second, the impedance of the current divider isolates the amplifier from the large capacitance of the SiPM, resulting in higher bandwidth and much greater stability.  Finally, this design is very simple, requiring only one opamp.  
 
@@ -44,20 +42,20 @@ The use of current domain PZC has several advantages over conventional methods. 
 
 # selection of SiPM model
 
-Currently 3 families of SiPM are supported, the red-enchanced S14420, the blue-enchanced S13360 and the blue-enchanced S14160.  Within each family multiple sizes of SPAD cell are available, with larger cells having higher photon detection efficency but much lower dynamic range due to fewer SPADs and larger SPADs being slower.  For example, doubling the SPAD cell size on the S14420 increases photon detection efficency by ~1.3 but reduces the dynamic range from 40B photons/s to just 5B photons/s.  The older S13360 is available in larger SPAD sizes (50 and 75 micron) that have very high detection efficency.  The newer S14160 is available in very small SPAD sizes enabling higher dynamic range.  Both are reasonable choices below 550 nm, with the S14420 being a better choice above that.
+Currently 3 families of SiPM are supported, the red-enchanced S14420, the blue-enchanced S13360 and the blue-enchanced, high dynamic range S14160.  Within each family multiple sizes of SPAD cell are available, with larger cells having higher photon detection efficency but much lower dynamic range due to fewer SPADs and larger SPADs being slower.  For example, doubling the SPAD cell size on the S14420 increases photon detection efficency by ~1.3 but reduces the dynamic range from 40B photons/s to just 5B photons/s.  The older S13360 is available in larger SPAD sizes (50 and 75 micron) that have very high detection efficency.  The newer S14160 is available in very small SPAD sizes enabling higher dynamic range.  Both are reasonable choices below 550 nm, with the S14420 being a better choice above that.
 
-Each SPAD size requires a unique PZC configuration.  By default the S14420 BOM is configured for 25 microns, the S14160 for 15 microns and the S13360 for 50 microns.  Where the values are known the alternative PZC configuration is in the schematic, so be sure to change that if you buy a different model SiPM.  
+Each SPAD size requires a unique PZC configuration.  By default the S14420 BOM is configured for 25 microns, the S14160 for 15 microns and the S13360 for 50 microns.  Where the values are known the alternative PZC configuration is in the schematic, so be sure to change that if you buy a different SPAD-size SiPM.  
 
 # firmware
 
 The firmware folder includes both the Arudino bootloader for the SAMD21 microcontroller and a basic program for controlling the bias and offset voltages.  See [firmware setup instructions](https://github.com/OpenSiPM/sipm-bias-control/wiki/Setting-up-development-tools-and-flashing-firmware).  
 
-The actual firmware commands are sent over the virtual com port to the microcontroller.  "On" turns on the bias generator.  "Off" turns it off.  "gain 1000" sets the gain to 1000".  "gain?" returns the current gain.  "offset 150" sets the tia offset to 150 units.  
+The actual firmware commands are sent over the virtual com port to the microcontroller.  "On" turns on the bias generator.  "Off" turns it off.  "gain 1000" sets the gain to 1000".  "gain?" returns the current gain.  "offset 150" sets the tia offset to 150 units.  "help?" prints a list of supported commands.  The bias generator can also be calibrated using the "calibration" command if exact voltages (beyond what is possible with resistor tolerances) are required.  The firmware can also be configured for the standard LT8362 design (max voltage of 60V) or a higher voltage configuration using the LT8361.  
 
 # low pass filter
 The updated tiav3 design incorporates a low pass filter that can be configured for typical resonant or polygon scanning applications. 
 
-It is strongly recommended to adjust the bandwidth of the filter to match your scanning speed and objective.  The wrong banwdith will reduce sensitivity (too high) or resolution (too low). See [Low-Pass-Filter](https://github.com/OpenSiPM/sipm-bias-control/wiki/Low-Pass-Filter) for details. 
+It is very strongly recommended to adjust the bandwidth of the filter to match your scanning speed and objective.  The wrong banwdith will reduce sensitivity (if too high) or resolution (if too low). See [Low-Pass-Filter](https://github.com/OpenSiPM/sipm-bias-control/wiki/Low-Pass-Filter) for details.  Suggested filter configurations are provided in the TIA schematics.  
 
 
 # optical design
@@ -66,7 +64,7 @@ Sample Zemax optical design files are provided in the optics demonstrating one p
 
 # ordering boards
 
-Go to https://jlcpcb.com, https://www.seeedstudio.com/fusion_pcb.html or the service of your choice, upload the Gerber files, and pay.  At present prices, 10 boards will cost about 25 dollars shipped to most of the world. 
+Go to https://jlcpcb.com, https://www.seeedstudio.com/fusion_pcb.html or the service of your choice, upload the Gerber files, and pay.  At present prices, 10 boards will cost about 10-25 dollars shipped to most of the world. 
 
 Gerber files can be generated from KiCAD using 'File -> Plot' or using the JLCPCB plugin.
 
@@ -74,4 +72,4 @@ Gerber files can be generated from KiCAD using 'File -> Plot' or using the JLCPC
 
 The easiest way to assemble these boards is using solder paste and a reflow oven.  The inexpensive T-962 clones on Amazon or even a hotplate will work fine for simple boards such as this.  Alternatively, they can also be manually soldered.  The design uses a mix of 0402 and larger parts, which can be challenging to solder with the wrong tools.  A ~0.6-1.2mm diameter chissel type soldering tip, high quality no clean flux such as amtech nc-559-v2-tf, 40/60 lead solder, and good tweezer such as Hakko CHP 5-SA or equivilent are strongly recommended if reflow is not used. These are inexpensive and readily available on Amazon. 
 
-If you're going to make lots of boards, paying for assembly of the passive and common components and then adding the detectors yourself might be worthwhile. 
+If you're going to make lots of boards, paying for assembly of the passive and common components and then adding the detectors yourself might be worthwhile.  The BOM for the bias generator has been selected such that nearly all components are available at JLCPCB.  
