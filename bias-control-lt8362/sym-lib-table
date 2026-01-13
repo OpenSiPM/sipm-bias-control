@@ -1,4 +1,6 @@
 (sym_lib_table
+  (version 7)
   (lib (name "MicroChip DACs")(type "Legacy")(uri "${KIPRJMOD}/schlib/SamacSys_Parts.lib")(options "")(descr ""))
   (lib (name "2021-12-04_19-05-44")(type "Legacy")(uri "${KIPRJMOD}/schlib/2021-12-04_19-05-44.lib")(options "")(descr ""))
+  (lib (name "UJ20-C-V-C-2-SMT-TR")(type "KiCad")(uri "${KIPRJMOD}/schlib/UJ20-C-V-C-2-SMT-TR.kicad_sym")(options "")(descr ""))
 )
