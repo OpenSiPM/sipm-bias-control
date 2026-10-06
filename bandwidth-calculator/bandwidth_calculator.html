@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SiPM Low Pass Filter Calculator</title>
+<style type="text/css">
+/* Layout and colours follow the interactive BOM pages in this repo (bom/ibom.html). */
+html, body { margin: 0px; font-family: Verdana, sans-serif; }
+.topmostdiv { min-height: 100vh; background-color: #fff; color: #000; }
+.dark.topmostdiv { background-color: #252c30; color: #eee; }
+#top { display: flex; flex-wrap: wrap; align-items: center; border-bottom: 5px solid #ddd; }
+.dark #top { border-bottom-color: #777; }
+#fileinfodiv { flex: 1 1 400px; min-width: 0; }
+.fileinfo { width: 100%; max-width: 1000px; border: none; padding: 3px; }
+.fileinfo .title { font-size: 20pt; font-weight: bold; }
+.fileinfo td { overflow: hidden; white-space: nowrap; max-width: 1px; width: 50%; text-overflow: ellipsis; }
+.menu-label { display: inline-block; margin: 6px; padding: 8px 12px; border: 1px solid #888;
+  border-radius: 6px; background-color: #eee; cursor: pointer; user-select: none; }
+.dark .menu-label { background-color: #111; }
+#content { max-width: 1000px; padding: 0 8px 24px 8px; box-sizing: border-box; }
+h2 { font-size: 14pt; margin: 20px 0 6px 0; }
+p { line-height: 1.4; }
+a { color: #0645ad; }
+.dark a { color: #8ab4f8; }
+.bom { border-collapse: collapse; font-family: Consolas, "DejaVu Sans Mono", Monaco, monospace;
+  font-size: 10pt; table-layout: fixed; width: 100%; margin-top: 1px; }
+.bom th, .bom td { border: 1px solid black; padding: 5px; word-wrap: break-word; text-align: center; }
+.dark .bom th, .dark .bom td { border: 1px solid #777; }
+.bom th { background-color: #CCCCCC; background-clip: padding-box; }
+.dark .bom th { background-color: #3b4749; }
+.bom tr:nth-child(even) { background-color: #f2f2f2; }
+.dark .bom tr:nth-child(even) { background-color: #313b40; }
+/* keep zebra striping correct while the duty-cycle row is hidden (ignored by older browsers) */
+.bom tr:nth-child(even of :not([hidden])) { background-color: #f2f2f2; }
+.bom tr:nth-child(odd of :not([hidden])) { background-color: transparent; }
+.dark .bom tr:nth-child(even of :not([hidden])) { background-color: #313b40; }
+.bom tr.highlighted:nth-child(n) { background-color: #cfc; }
+.dark .bom tr.highlighted:nth-child(n) { background-color: #226022; }
+.bom td.label { text-align: left; }
+.bom td.formula { font-size: 9pt; }
+.bom .col-label { width: 34%; }
+.bom .col-value { width: 22%; }
+.bom .col-ref { width: 10%; }
+.bom tr.key td { font-weight: bold; font-size: 11pt; }
+.bom input, .bom select { width: 100%; box-sizing: border-box; height: 32px; padding: 4px 8px;
+  font-family: Consolas, "DejaVu Sans Mono", Monaco, monospace; font-size: 14px;
+  border: 1px solid #888; border-radius: 6px; outline: none; background-color: #eee; color: #000; }
+.dark .bom input, .dark .bom select { background-color: #111; color: #eee; }
+.bom input:focus, .bom select:focus { background-color: white; border: 1px solid #333; }
+.dark .bom input:focus, .dark .bom select:focus { background-color: #333; border: 1px solid #ccc; }
+.bom input::placeholder { color: #999; }
+.ref a { text-decoration: none; }
+#refs li { margin-bottom: 6px; font-size: 10pt; }
+@media (max-width: 600px) {
+  .fileinfo .title { font-size: 14pt; }
+  .fileinfo td { white-space: normal; }
+  .bom { font-size: 9pt; }
+  .bom td.formula { font-size: 8pt; }
+  .bom th, .bom td { padding: 4px 3px; }
+  .bom .col-label { width: 30%; }
+  .bom .col-value { width: 28%; }
+  .bom .col-ref { width: 11%; }
+  .bom input, .bom select { padding: 2px 4px; font-size: 13px; }
+}
+</style>
+<script id="calc">
+// Pure calculation code (no DOM). Tested by calc.test.js.
+// References [n] match the list at the bottom of the page.
+(function (root) {
+  'use strict';
+
+  // 3rd-order Butterworth pi filters, 50 ohm, from the TIA schematic notes [7].
+  var FILTERS = [
+    { f: 8, c1: '380 pF', l: '1800 nH', c2: '380 pF' },
+    { f: 10, c1: '330 pF', l: '1500 nH', c2: '330 pF' },
+    { f: 15, c1: '220 pF', l: '1000 nH', c2: '220 pF' },
+    { f: 20, c1: '160 pF', l: '820 nH', c2: '160 pF' },
+    { f: 27, c1: '120 pF', l: '560 nH', c2: '120 pF' },
+    { f: 34, c1: '91 pF', l: '470 nH', c2: '91 pF' },
+    { f: 42, c1: '75 pF', l: '390 nH', c2: '75 pF' },
+    { f: 50, c1: '62 pF', l: '330 nH', c2: '62 pF' }
+  ];
+
+  var FWHM_PER_OMEGA = 2 * Math.sqrt(Math.LN2);
+  var MODES = { '2p': 1, '1p': 1, '1p-confocal': 1, '3p': 1 };
+
+  function isPos(x) { return typeof x === 'number' && isFinite(x) && x > 0; }
+
+  // 2P 1/e radius of the squared illumination PSF, Zipfel et al. [2].
+  function omega2p(lambdaUm, na) {
+    return na <= 0.7
+      ? 0.320 * lambdaUm / (Math.SQRT2 * na)
+      : 0.325 * lambdaUm / (Math.SQRT2 * Math.pow(na, 0.91));
+  }
+
+  // Lateral intensity FWHM in um.
+  function fwhm(mode, wavelengthNm, na) {
+    var l = wavelengthNm / 1000;
+    switch (mode) {
+      case '2p': return FWHM_PER_OMEGA * omega2p(l, na);                        // [2]
+      case '3p': return FWHM_PER_OMEGA * omega2p(l, na) * Math.sqrt(2 / 3);     // Gaussian approx. of [2]
+      case '1p': return 0.51 * l / na;                                          // [4]
+      case '1p-confocal': return 0.37 * l / na;                                 // [4][5]
+      default: return NaN;
+    }
+  }
+
+  function nearestFilter(f3dbMHz) {
+    if (!isPos(f3dbMHz) || f3dbMHz < FILTERS[0].f || f3dbMHz > FILTERS[FILTERS.length - 1].f) {
+      return null;
+    }
+    var best = FILTERS[0];
+    for (var i = 1; i < FILTERS.length; i++) {
+      if (Math.abs(Math.log(FILTERS[i].f / f3dbMHz)) < Math.abs(Math.log(best.f / f3dbMHz))) {
+        best = FILTERS[i];
+      }
+    }
+    return best;
+  }
+
+  function compute(p) {
+    if (!(p.mode in MODES)) return null;
+    if (!isPos(p.wavelengthNm) || !isPos(p.na) || p.na > 1.7 ||
+        !isPos(p.fovMm) || !isPos(p.freqKHz)) return null;
+    var measured = p.measuredFwhmUm !== undefined;
+    if (measured && !isPos(p.measuredFwhmUm)) return null;
+    var fw = measured ? p.measuredFwhmUm : fwhm(p.mode, p.wavelengthNm, p.na);
+    if (!isPos(fw)) return null;
+
+    var fovM = p.fovMm * 1e-3;
+    var fHz = p.freqKHz * 1e3;
+    var fwM = fw * 1e-6;
+    var vAvg, coef;
+    if (p.scanner === 'resonant') {
+      vAvg = 2 * fovM * fHz;           // two sweeps per mirror period
+      coef = 0.5;                      // eq. A3 [1]
+    } else if (p.scanner === 'constant') {
+      var duty = p.dutyPct === undefined ? 100 : p.dutyPct;
+      if (!isPos(duty) || duty > 100) return null;
+      vAvg = fovM * fHz / (duty / 100);
+      coef = Math.SQRT2 * Math.LN2 / Math.PI;   // eq. A1/A2 [1]
+    } else {
+      return null;
+    }
+
+    var pointsPerLine = fovM / fwM;
+    var pointsPerSec = vAvg / fwM;
+    var f3dbMHz = coef * pointsPerSec / 1e6;
+    return {
+      fwhmUm: fw,
+      measured: measured,
+      pointsPerLine: pointsPerLine,
+      pointsPerSec: pointsPerSec,
+      f3dbMHz: f3dbMHz,
+      minSampleMHz: 2 * f3dbMHz,
+      maxPixelsPerLine: 2 * pointsPerLine,
+      filter: nearestFilter(f3dbMHz)
+    };
+  }
+
+  root.SiPMCalc = { FILTERS: FILTERS, fwhm: fwhm, nearestFilter: nearestFilter, compute: compute };
+})(globalThis);
+</script>
+</head>
+<body>
+<div id="topmostdiv" class="topmostdiv">
+  <div id="top">
+    <div id="fileinfodiv">
+      <table class="fileinfo">
+        <tbody>
+          <tr>
+            <td class="title" style="width: 70%">SiPM Low Pass Filter Calculator</td>
+            <td class="title" style="width: 30%">Rev 1</td>
+          </tr>
+          <tr>
+            <td>OpenSiPM</td>
+            <td>2026-10-06</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <label class="menu-label">
+      <input id="darkmodeCheckbox" type="checkbox">
+      Dark mode
+    </label>
+  </div>
+
+  <div id="content">
+    <p>
+      Picks the analog bandwidth for the SiPM transimpedance amplifier low pass filter so that it
+      matches the optical resolution and scan speed of a laser scanning microscope
+      <span class="ref"><a href="#ref1">[1]</a></span><span class="ref"><a href="#ref3">[3]</a></span>.
+      A cutoff that is too high adds noise (lower sensitivity); one that is too low blurs the image
+      (lower resolution).
+    </p>
+
+    <h2>1. Resolution</h2>
+    <table class="bom">
+      <colgroup><col class="col-label"><col class="col-value"><col><col class="col-ref"></colgroup>
+      <thead><tr><th>Parameter</th><th>Value</th><th>Formula</th><th>Ref</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="label">Excitation mode</td>
+          <td><select id="mode">
+            <option value="2p" selected>2-photon</option>
+            <option value="1p">1-photon</option>
+            <option value="1p-confocal">1-photon confocal</option>
+            <option value="3p">3-photon</option>
+          </select></td>
+          <td class="formula"></td><td></td>
+        </tr>
+        <tr>
+          <td class="label">Excitation wavelength (nm)</td>
+          <td><input id="wavelength" type="number" inputmode="decimal" value="920" min="0" step="any"></td>
+          <td class="formula">&lambda;</td><td></td>
+        </tr>
+        <tr>
+          <td class="label">Objective NA</td>
+          <td><input id="na" type="number" inputmode="decimal" value="0.45" min="0" max="1.7" step="any"></td>
+          <td class="formula">NA</td><td></td>
+        </tr>
+        <tr>
+          <td class="label">Measured FWHM (&micro;m, optional)</td>
+          <td><input id="measured" type="number" inputmode="decimal" placeholder="blank = calculated" min="0" step="any"></td>
+          <td class="formula">replaces calculated FWHM</td>
+          <td class="ref"><a href="#ref1">[1]</a></td>
+        </tr>
+        <tr class="key">
+          <td class="label">Lateral resolution, FWHM (&micro;m)</td>
+          <td id="outFwhm">&mdash;</td>
+          <td class="formula" id="fwhmFormula"></td>
+          <td class="ref" id="fwhmRef"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>2. Bandwidth</h2>
+    <table class="bom">
+      <colgroup><col class="col-label"><col class="col-value"><col><col class="col-ref"></colgroup>
+      <thead><tr><th>Parameter</th><th>Value</th><th>Formula</th><th>Ref</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="label">Field of view, fast axis, full scan (mm)</td>
+          <td><input id="fov" type="number" inputmode="decimal" value="1.05" min="0" step="any"></td>
+          <td class="formula">FOV</td><td></td>
+        </tr>
+        <tr>
+          <td class="label">Scanner type</td>
+          <td><select id="scanner">
+            <option value="resonant" selected>Resonant</option>
+            <option value="constant">Constant velocity (polygon / linear galvo)</option>
+          </select></td>
+          <td class="formula"></td><td></td>
+        </tr>
+        <tr>
+          <td class="label" id="freqLabel">Mirror frequency (kHz)</td>
+          <td><input id="freq" type="number" inputmode="decimal" value="12" min="0" step="any"></td>
+          <td class="formula">f</td><td></td>
+        </tr>
+        <tr id="dutyRow" hidden>
+          <td class="label">Scan duty cycle (%)</td>
+          <td><input id="duty" type="number" inputmode="decimal" value="100" min="0" max="100" step="any"></td>
+          <td class="formula">D (fraction of line time inside FOV)</td><td></td>
+        </tr>
+        <tr>
+          <td class="label">Resolvable points per line</td>
+          <td id="outPoints">&mdash;</td>
+          <td class="formula">N = FOV / FWHM</td>
+          <td class="ref"><a href="#ref1">[1]</a></td>
+        </tr>
+        <tr>
+          <td class="label">Resolvable points per second (M/s)</td>
+          <td id="outRate">&mdash;</td>
+          <td class="formula" id="rateFormula"></td>
+          <td class="ref"><a href="#ref1">[1]</a></td>
+        </tr>
+        <tr class="key">
+          <td class="label">Recommended 3 dB cutoff (MHz)</td>
+          <td id="outF3db">&mdash;</td>
+          <td class="formula" id="f3dbFormula"></td>
+          <td class="ref"><a href="#ref1">[1]</a></td>
+        </tr>
+        <tr>
+          <td class="label">Minimum digitizer sample rate (MS/s)</td>
+          <td id="outSample">&mdash;</td>
+          <td class="formula">2 &times; f<sub>3dB</sub></td>
+          <td class="ref"><a href="#ref1">[1]</a></td>
+        </tr>
+        <tr>
+          <td class="label">Maximum useful pixels per line</td>
+          <td id="outPixels">&mdash;</td>
+          <td class="formula">2 &times; N</td>
+          <td class="ref"><a href="#ref1">[1]</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Filter</h2>
+    <p>
+      Standard 3rd order Butterworth &pi; filters (shunt C, series L, shunt C, 50 &Omega;) from the
+      TIA schematics <span class="ref"><a href="#ref7">[7]</a></span>. The nearest one is highlighted.
+    </p>
+    <table class="bom">
+      <thead><tr><th>f<sub>3dB</sub> (MHz)</th><th>C1</th><th>L</th><th>C2</th></tr></thead>
+      <tbody id="filterBody"></tbody>
+    </table>
+    <p id="filterNote">&mdash;</p>
+    <p>
+      Custom filters: <a href="https://markimicrowave.com/technical-resources/tools/lc-filter-design-tool/"
+      target="_blank" rel="noopener">Marki Microwave LC Filter Design Tool</a>
+      <span class="ref"><a href="#ref6">[6]</a></span>.
+    </p>
+
+    <h2>References</h2>
+    <ol id="refs">
+      <li id="ref1">V. D. Ching-Roa, C. Z. Huang, M. G. Giacomelli, &ldquo;High area and volumetric throughput
+        parallel two-photon fluorescence microscopy using silicon photomultiplier arrays,&rdquo;
+        <i>Photonics Research</i> 13(9), 2704&ndash;2717 (2025), Appendix A.
+        <a href="https://doi.org/10.1364/PRJ.546289" target="_blank" rel="noopener">doi:10.1364/PRJ.546289</a></li>
+      <li id="ref2">W. R. Zipfel, R. M. Williams, W. W. Webb, &ldquo;Nonlinear magic: multiphoton microscopy in
+        the biosciences,&rdquo; <i>Nat. Biotechnol.</i> 21, 1369&ndash;1377 (2003).
+        <a href="https://doi.org/10.1038/nbt899" target="_blank" rel="noopener">doi:10.1038/nbt899</a></li>
+      <li id="ref3">V. D. Ching-Roa, E. M. Olson, S. F. Ibrahim, R. Torres, M. G. Giacomelli,
+        &ldquo;Ultrahigh-speed point scanning two-photon microscopy using high dynamic range silicon
+        photomultipliers,&rdquo; <i>Sci. Rep.</i> 11, 5248 (2021).
+        <a href="https://doi.org/10.1038/s41598-021-84522-0" target="_blank" rel="noopener">doi:10.1038/s41598-021-84522-0</a></li>
+      <li id="ref4">J. B. Pawley (ed.), <i>Handbook of Biological Confocal Microscopy</i>, 3rd ed.,
+        Springer (2006).</li>
+      <li id="ref5">T. Wilson, &ldquo;Resolution and optical sectioning in the confocal microscope,&rdquo;
+        <i>J. Microsc.</i> 244, 113&ndash;121 (2011).
+        <a href="https://doi.org/10.1111/j.1365-2818.2011.03549.x" target="_blank" rel="noopener">doi:10.1111/j.1365-2818.2011.03549.x</a></li>
+      <li id="ref6">Marki Microwave, LC Filter Design Tool,
+        <a href="https://markimicrowave.com/technical-resources/tools/lc-filter-design-tool/" target="_blank" rel="noopener">markimicrowave.com</a>.</li>
+      <li id="ref7">OpenSiPM sipm-bias-control TIA schematics and wiki
+        <a href="https://github.com/OpenSiPM/sipm-bias-control/wiki/Low-Pass-Filter" target="_blank" rel="noopener">Low-Pass-Filter</a>.</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+// Page wiring. Runs immediately (end of body) so it also works under htmlpreview.github.io.
+(function () {
+  'use strict';
+  var C = window.SiPMCalc;
+
+  // htmlpreview.github.io rewrites only the links present at load time and sets a
+  // <base> pointing at the raw file, so in-page "#ref" links are scrolled manually.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var target = document.getElementById(a.getAttribute('href').slice(1));
+    if (target) { e.preventDefault(); target.scrollIntoView(); }
+  });
+  function $(id) { return document.getElementById(id); }
+  function num(id) {
+    var s = $(id).value.trim();
+    return s === '' ? undefined : Number(s);
+  }
+  function refs(list) {
+    return list.map(function (n) { return '<a href="#ref' + n + '">[' + n + ']</a>'; }).join('');
+  }
+
+  var MODE_INFO = {
+    '2p': ['&omega; = 0.320&lambda;/(&radic;2&middot;NA) (NA &le; 0.7) or 0.325&lambda;/(&radic;2&middot;NA<sup>0.91</sup>); FWHM = 2&radic;ln2&middot;&omega;', [2]],
+    '1p': ['0.51&lambda; / NA', [4]],
+    '1p-confocal': ['0.37&lambda; / NA (pinhole &le; 0.25 AU)', [4, 5]],
+    '3p': ['2P &omega; &times; &radic;(2/3); FWHM = 2&radic;ln2&middot;&omega; (approximation)', [2]]
+  };
+
+  // Static filter table rows.
+  C.FILTERS.forEach(function (row) {
+    var tr = document.createElement('tr');
+    [row.f, row.c1, row.l, row.c2].forEach(function (v) {
+      var td = document.createElement('td');
+      td.textContent = v;
+      tr.appendChild(td);
+    });
+    $('filterBody').appendChild(tr);
+  });
+
+  function fmt(x, digits) { return Number(x.toPrecision(digits)).toString(); }
+
+  function update() {
+    var scanner = $('scanner').value;
+    var resonant = scanner === 'resonant';
+    $('dutyRow').hidden = resonant;
+    $('freqLabel').textContent = resonant ? 'Mirror frequency (kHz)' : 'Line rate (kHz)';
+    $('rateFormula').innerHTML = resonant
+      ? 'R = 2&middot;FOV&middot;f / FWHM'
+      : 'R = FOV&middot;f / (D&middot;FWHM)';
+    $('f3dbFormula').innerHTML = resonant
+      ? '0.5 &times; R (eq. A3)'
+      : '(&radic;2&middot;ln2/&pi;) &times; R &asymp; 0.312 &times; R (eq. A2)';
+
+    var r = C.compute({
+      mode: $('mode').value,
+      wavelengthNm: num('wavelength'),
+      na: num('na'),
+      measuredFwhmUm: num('measured'),
+      fovMm: num('fov'),
+      scanner: scanner,
+      freqKHz: num('freq'),
+      dutyPct: num('duty')
+    });
+
+    var info = MODE_INFO[$('mode').value];
+    var measured = r ? r.measured : num('measured') !== undefined;
+    $('fwhmFormula').innerHTML = measured ? 'measured value' : info[0];
+    $('fwhmRef').innerHTML = measured ? refs([1]) : refs(info[1]);
+
+    var dash = '\u2014';
+    $('outFwhm').textContent = r ? fmt(r.fwhmUm, 3) : dash;
+    $('outPoints').textContent = r ? Math.round(r.pointsPerLine).toString() : dash;
+    $('outRate').textContent = r ? fmt(r.pointsPerSec / 1e6, 3) : dash;
+    $('outF3db').textContent = r ? fmt(r.f3dbMHz, 3) : dash;
+    $('outSample').textContent = r ? fmt(r.minSampleMHz, 3) : dash;
+    $('outPixels').textContent = r ? Math.round(r.maxPixelsPerLine).toString() : dash;
+
+    var rows = $('filterBody').children;
+    for (var i = 0; i < rows.length; i++) {
+      rows[i].classList.toggle('highlighted', !!(r && r.filter === C.FILTERS[i]));
+    }
+
+    var note;
+    if (!r) {
+      note = dash;
+    } else {
+      var spec = 'Low-pass, Butterworth, 3rd order, 50 &Omega;, f<sub>c</sub> = ' + fmt(r.f3dbMHz, 3) + ' MHz';
+      if (r.filter) {
+        var dev = (r.filter.f / r.f3dbMHz - 1) * 100;
+        note = 'Nearest standard filter: <b>' + r.filter.f + ' MHz</b> (' + (dev >= 0 ? '+' : '') +
+          fmt(dev, 2) + '% from recommended). For an exact cutoff, design with Marki ' +
+          refs([6]) + ' using: ' + spec + '.';
+      } else {
+        note = 'The recommended cutoff is outside the 8&ndash;50 MHz table. Design a custom filter with Marki ' +
+          refs([6]) + ' using: ' + spec + '.';
+      }
+    }
+    $('filterNote').innerHTML = note;
+  }
+
+  // Dark mode, saved like the BOM page's settings; storage may be unavailable.
+  function setDark(on) {
+    $('topmostdiv').classList.toggle('dark', on);
+    $('darkmodeCheckbox').checked = on;
+  }
+  var saved = null;
+  try { saved = window.localStorage.getItem('sipm-bw-calc-dark'); } catch (e) { /* ignore */ }
+  setDark(saved === '1');
+  $('darkmodeCheckbox').addEventListener('change', function () {
+    setDark(this.checked);
+    try { window.localStorage.setItem('sipm-bw-calc-dark', this.checked ? '1' : '0'); } catch (e) { /* ignore */ }
+  });
+
+  ['mode', 'wavelength', 'na', 'measured', 'fov', 'scanner', 'freq', 'duty'].forEach(function (id) {
+    $(id).addEventListener('input', update);
+    $(id).addEventListener('change', update);
+  });
+  update();
+})();
+</script>
+</body>
+</html>
