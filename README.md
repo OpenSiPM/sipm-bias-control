@@ -57,6 +57,8 @@ The updated tiav3 design incorporates a low pass filter that can be configured f
 
 It is very strongly recommended to adjust the bandwidth of the filter to match your scanning speed and objective.  The wrong banwdith will reduce sensitivity (if too high) or resolution (if too low). See [Low-Pass-Filter](https://github.com/OpenSiPM/sipm-bias-control/wiki/Low-Pass-Filter) for details.  Suggested filter configurations are provided in the TIA schematics.  
 
+To find the right cutoff for your microscope, use the [low pass filter bandwidth calculator](https://htmlpreview.github.io/?https://github.com/OpenSiPM/sipm-bias-control/blob/master/bandwidth-calculator/bandwidth_calculator.html), which computes the recommended bandwidth from wavelength, objective NA, field of view and scan rate and suggests the nearest filter configuration.
+
 
 # optical design
 
