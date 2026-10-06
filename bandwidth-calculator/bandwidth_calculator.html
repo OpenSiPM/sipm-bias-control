@@ -4,6 +4,102 @@
 <meta charset="utf-8">
 <title>SiPM Low Pass Filter Calculator</title>
 <script id="calc">
+// Pure calculation code (no DOM). Tested by calc.test.js.
+// References [n] match the list at the bottom of the page.
+(function (root) {
+  'use strict';
+
+  // 3rd-order Butterworth pi filters, 50 ohm, from the TIA schematic notes [7].
+  var FILTERS = [
+    { f: 8, c1: '380 pF', l: '1800 nH', c2: '380 pF' },
+    { f: 10, c1: '330 pF', l: '1500 nH', c2: '330 pF' },
+    { f: 15, c1: '220 pF', l: '1000 nH', c2: '220 pF' },
+    { f: 20, c1: '160 pF', l: '820 nH', c2: '160 pF' },
+    { f: 27, c1: '120 pF', l: '560 nH', c2: '120 pF' },
+    { f: 34, c1: '91 pF', l: '470 nH', c2: '91 pF' },
+    { f: 42, c1: '75 pF', l: '390 nH', c2: '75 pF' },
+    { f: 50, c1: '62 pF', l: '330 nH', c2: '62 pF' }
+  ];
+
+  var FWHM_PER_OMEGA = 2 * Math.sqrt(Math.LN2);
+  var MODES = { '2p': 1, '1p': 1, '1p-confocal': 1, '3p': 1 };
+
+  function isPos(x) { return typeof x === 'number' && isFinite(x) && x > 0; }
+
+  // 2P 1/e radius of the squared illumination PSF, Zipfel et al. [2].
+  function omega2p(lambdaUm, na) {
+    return na <= 0.7
+      ? 0.320 * lambdaUm / (Math.SQRT2 * na)
+      : 0.325 * lambdaUm / (Math.SQRT2 * Math.pow(na, 0.91));
+  }
+
+  // Lateral intensity FWHM in um.
+  function fwhm(mode, wavelengthNm, na) {
+    var l = wavelengthNm / 1000;
+    switch (mode) {
+      case '2p': return FWHM_PER_OMEGA * omega2p(l, na);                        // [2]
+      case '3p': return FWHM_PER_OMEGA * omega2p(l, na) * Math.sqrt(2 / 3);     // Gaussian approx. of [2]
+      case '1p': return 0.51 * l / na;                                          // [4]
+      case '1p-confocal': return 0.37 * l / na;                                 // [4][5]
+      default: return NaN;
+    }
+  }
+
+  function nearestFilter(f3dbMHz) {
+    if (!isPos(f3dbMHz) || f3dbMHz < FILTERS[0].f || f3dbMHz > FILTERS[FILTERS.length - 1].f) {
+      return null;
+    }
+    var best = FILTERS[0];
+    for (var i = 1; i < FILTERS.length; i++) {
+      if (Math.abs(Math.log(FILTERS[i].f / f3dbMHz)) < Math.abs(Math.log(best.f / f3dbMHz))) {
+        best = FILTERS[i];
+      }
+    }
+    return best;
+  }
+
+  function compute(p) {
+    if (!(p.mode in MODES)) return null;
+    if (!isPos(p.wavelengthNm) || !isPos(p.na) || p.na > 1.7 ||
+        !isPos(p.fovMm) || !isPos(p.freqKHz)) return null;
+    var measured = p.measuredFwhmUm !== undefined;
+    if (measured && !isPos(p.measuredFwhmUm)) return null;
+    var fw = measured ? p.measuredFwhmUm : fwhm(p.mode, p.wavelengthNm, p.na);
+    if (!isPos(fw)) return null;
+
+    var fovM = p.fovMm * 1e-3;
+    var fHz = p.freqKHz * 1e3;
+    var fwM = fw * 1e-6;
+    var vAvg, coef;
+    if (p.scanner === 'resonant') {
+      vAvg = 2 * fovM * fHz;           // two sweeps per mirror period
+      coef = 0.5;                      // eq. A3 [1]
+    } else if (p.scanner === 'constant') {
+      var duty = p.dutyPct === undefined ? 100 : p.dutyPct;
+      if (!isPos(duty) || duty > 100) return null;
+      vAvg = fovM * fHz / (duty / 100);
+      coef = Math.SQRT2 * Math.LN2 / Math.PI;   // eq. A1/A2 [1]
+    } else {
+      return null;
+    }
+
+    var pointsPerLine = fovM / fwM;
+    var pointsPerSec = vAvg / fwM;
+    var f3dbMHz = coef * pointsPerSec / 1e6;
+    return {
+      fwhmUm: fw,
+      measured: measured,
+      pointsPerLine: pointsPerLine,
+      pointsPerSec: pointsPerSec,
+      f3dbMHz: f3dbMHz,
+      minSampleMHz: 2 * f3dbMHz,
+      maxPixelsPerLine: 2 * pointsPerLine,
+      filter: nearestFilter(f3dbMHz)
+    };
+  }
+
+  root.SiPMCalc = { FILTERS: FILTERS, fwhm: fwhm, nearestFilter: nearestFilter, compute: compute };
+})(globalThis);
 </script>
 </head>
 <body>
